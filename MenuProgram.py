@@ -54,11 +54,11 @@ def MathQuestion():
         PointsDictionary["Math Question"].correct()
 def RotationOption():
     global PointsDictionary
-    orgnums=[]
+    nums=[]
     Size=random.randint(5,10)
     for i in range(Size):
-        orgnums.append(random.randint(1,100))
-    nums=orgnums
+        nums.append(random.randint(1,100))
+    Index=random.randint(0,Size-1)
     Direction=random.randint(0,1)
     NumofRots=random.randint(1,Size-1)
     Printing("My list of numbers currently equals {}".format(nums))
@@ -66,26 +66,24 @@ def RotationOption():
     RotResults=[]
     if Direction:
         for i in range(NumofRots):
-            nums[-1:] + nums[:-1]
-            RotResults.append(nums[0])
+            RotResults.append("Rotation {}: {}, Element {} is {}".format(i+1,nums[-1:] + nums[:-1],Index+1,nums[Index]))
     else:
         for i in range(NumofRots):
-            nums[1:] + nums[:1]
-            RotResults.append(nums[0])
-    Printing("I just finshed rotating the list.",enddelay=2)
-    Printing("Now, what is the first element of the new list: ")
+            RotResults.append("Rotation {}: {}, Element {} is {}".format(i+1,nums[1:] + nums[:1],Index+1,nums[Index]))
+    Printing("I just finished rotating the list.",enddelay=2)
+    Printing("Now, what is element {} (element 1 is the first element, as we are not using zero indexing) of the new list: ".format(Index+1))
     x=int(input())
     if x==nums[0]:
         Printing("You are correct",enddelay=2)
         PointsDictionary["Rotation Question"].correct()
     else:
-        Printing("That is incorrect")
-        for i in range(NumofRots):
-            Printing("Rotation {} made {} the first element".format(i+1,RotResults[i]),enddelay=2)
+        Printing("That is incorrect",enddelay=2)
+        Printing("I will show you the rta")
+        for i in RotResults:
+            Printing(i,enddelay=2)
         PointsDictionary["Rotation Question"].incorrect()
-
+'''
 Printing("Welcome to the Tool\n",enddelay=2)
 '''
 while True:
-    MathQuestion()
-'''
+    RotationOption()
