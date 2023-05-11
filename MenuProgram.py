@@ -130,7 +130,7 @@ def Quit():
     #Print all the points and stats of the user
     Printing("Goodbye\n")
     exit(0)
-def Menu1():
+def Menu():
     OptionsDict={
         "Answer a math question for a point":MathQuestion,
         "Answer a rotation question for a point":RotationOption,
@@ -150,7 +150,7 @@ def Menu1():
         answer: str=str(inquirer.prompt(questions)["Option"])
         OptionsDict[answer]()
 
-Menu1()
+Menu()
 
 
 
