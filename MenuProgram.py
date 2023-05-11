@@ -15,9 +15,7 @@ def Printing(String:str,delay:float=0.0625,enddelay:float=1):
         print(i,end="",flush=True)
         time.sleep(delay)
     time.sleep(enddelay)
-PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade()}
-Tautologies=[]
-Fallacies=[]
+PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade()}
 def MathQuestion():
     global PointsDictionary
     Choice=0
@@ -75,13 +73,23 @@ def LogicTest():
     UserGrade=int(input())
     if abs(KidsGrade-UserGrade)<10:
         Printing("Your getting about the same grade as he is.\n")
-        PointsDictionary["Logic Question"].correct()
+        PointsDictionary["Logic Question"].correct(2)
     elif KidsGrade>UserGrade:
         Printing("You can do better next time.\n")
-        PointsDictionary["Logic Question"].incorrect()
+        PointsDictionary["Logic Question"].incorrect(2)
     else:
         Printing("Wow! Your doing better than he is.\n")
         PointsDictionary["Logic Question"].correct(2)
+def GuessingGame():
+  Num=random.randint(1,100)
+  Printing("I have a number in my head, what is it: ")
+  GuessedNum=int(input())
+  if GuessedNum==Num:
+    Printing("Correct, you get a point")
+    PointsDictionary["Guessing Game"].correct()
+  else:
+    Printing("Incorrect, the number was {}".format(Num))
+    PointsDictionary["Guessing Game"].incorrect()
 Printing("Welcome to the J Menu\n",enddelay=2)
 while True:
     LogicTest()
