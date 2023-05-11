@@ -67,7 +67,35 @@ def RotationOption():
         for i in RotResults:
             Printing(i,enddelay=2)
         PointsDictionary["Rotation Question"].incorrect()
+def BooleanExpressionGenerator()->str:
+    numofnums=random.randint(2,5)
+    Numbers=[]
+    for i in range(numofnums):
+        Numbers.append(random.randint(1,100))
+    Operators=[]
+    for i in range(numofnums-1):
+        Operators.append(["+","-","*","/","%"][random.randint(0,4)])
+    BooleanExpression="("
+    for i in range(numofnums-1):
+        BooleanExpression+=str(Numbers[i])
+        BooleanExpression+=str(Operators[i])
+    BooleanExpression+=str(Numbers[numofnums-1])
+    BooleanExpression+=["==",">","<","<=",">="]
+    BooleanExpression+=random.randint(100**numofnums)
+    BooleanExpression+=")"
+
 def LogicTest():
+    if (random.randint(0,1)):
+        BitwiseSymbol=["&","|","^"][random.randint(0,2)]
+        TestExpression=BooleanExpressionGenerator()+BitwiseSymbol+BooleanExpressionGenerator()
+        Correctness=eval(TestExpression) and inquirer.prompt(inquirer.Confirm("answer",message="Do you believe the expression {} is true".format(TestExpression.replace("&"," and ").replace("|"," or ").replace("^"," xor "))))["answer"]
+        if Correctness:
+            Printing("You are correct.",enddelay=2)
+            PointsDictionary["Logic Question"].correct()
+        else:
+            Printing("You are unfortunately incorrect",enddelay=2)
+            PointsDictionary["Logic Question"].incorrect()
+    '''
     Printing("I am thinking of a random kid's grade. If you are within 10 of his range, you will get a point. If you are greater than him, I will give you two points\n")
     Printing("What is your average grade: ")
     KidsGrade=random.randint(60,100)
@@ -81,9 +109,10 @@ def LogicTest():
     else:
         Printing("Wow! Your doing better than he is.\n")
         PointsDictionary["Logic Question"].correct(2)
+    '''
 def GuessingGame():
     Num=random.randint(1,100)
-    Printing("I have a number in my head, what is it\n".format(Num))
+    Printing("I have a number in my head, what is it?: ".format(Num))
     GuessedNum=int(input())
     if GuessedNum==Num:
         Printing("Correct, you get a point\n")
@@ -114,7 +143,10 @@ def Menu1():
     while True:
         answer: str=str(inquirer.prompt(questions)["Option"])
         OptionsDict[answer]()
+
 Menu1()
+
+
 
 '''
 Menu #1 - A menu with 5 options (including a quit option). 
