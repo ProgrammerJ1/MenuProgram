@@ -1,6 +1,7 @@
 import time
 import types
 import random
+import inquirer
 class Grade:
     def __init__(self) -> None:
         self.Score=0
@@ -81,18 +82,39 @@ def LogicTest():
         Printing("Wow! Your doing better than he is.\n")
         PointsDictionary["Logic Question"].correct(2)
 def GuessingGame():
-  Num=random.randint(1,100)
-  Printing("I have a number in my head, what is it: ")
-  GuessedNum=int(input())
-  if GuessedNum==Num:
-    Printing("Correct, you get a point")
-    PointsDictionary["Guessing Game"].correct()
-  else:
-    Printing("Incorrect, the number was {}".format(Num))
-    PointsDictionary["Guessing Game"].incorrect()
-Printing("Welcome to the J Menu\n",enddelay=2)
-while True:
-    LogicTest()
+    Num=random.randint(1,100)
+    Printing("I have a number in my head, what is it\n".format(Num))
+    GuessedNum=int(input())
+    if GuessedNum==Num:
+        Printing("Correct, you get a point\n")
+        PointsDictionary["Guessing Game"].correct()
+    else:
+        Printing("Incorrect, the number was {}\n".format(Num))
+        PointsDictionary["Guessing Game"].incorrect()
+def Quit():
+    #Print all the points and stats of the user
+    Printing("Goodbye\n")
+    exit(0)
+def Menu1():
+    OptionsDict={
+        "Answer a math question for a point":MathQuestion,
+        "Answer a rotation question for a point":RotationOption,
+        "Answer a logic question":LogicTest,
+        "Guess a number for a point":GuessingGame,
+        "Quit":Quit
+    }
+    Printing("Welcome to the J Menu\n",enddelay=2)
+    questions=[
+        inquirer.List(
+            "Option",
+            message="What would would you like to do?",
+            choices=["Answer a math question for a point","Answer a rotation question for a point","Answer a logic question","Guess a number for a point","Quit"]
+        )
+    ]
+    while True:
+        answer: str=str(inquirer.prompt(questions)["Option"])
+        OptionsDict[answer]()
+Menu1()
 
 '''
 Menu #1 - A menu with 5 options (including a quit option). 
