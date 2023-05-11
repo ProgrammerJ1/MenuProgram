@@ -80,21 +80,27 @@ def BooleanExpressionGenerator()->str:
         BooleanExpression+=str(Numbers[i])
         BooleanExpression+=str(Operators[i])
     BooleanExpression+=str(Numbers[numofnums-1])
-    BooleanExpression+=["==",">","<","<=",">="]
-    BooleanExpression+=random.randint(100**numofnums)
+    BooleanExpression+=["==",">","<","<=",">="][random.randint(0,4)]
+    BooleanExpression+=str(random.randint(0,100**numofnums))
     BooleanExpression+=")"
+    return BooleanExpression
 
 def LogicTest():
+    TestExpression=""
     if (random.randint(0,1)):
         BitwiseSymbol=["&","|","^"][random.randint(0,2)]
         TestExpression=BooleanExpressionGenerator()+BitwiseSymbol+BooleanExpressionGenerator()
-        Correctness=eval(TestExpression) and inquirer.prompt(inquirer.Confirm("answer",message="Do you believe the expression {} is true".format(TestExpression.replace("&"," and ").replace("|"," or ").replace("^"," xor "))))["answer"]
-        if Correctness:
-            Printing("You are correct.",enddelay=2)
-            PointsDictionary["Logic Question"].correct()
-        else:
-            Printing("You are unfortunately incorrect",enddelay=2)
-            PointsDictionary["Logic Question"].incorrect()
+    else:
+        TestExpression=BooleanExpressionGenerator()
+        TestExpression=TestExpression[1:len(TestExpression)-2]
+    Correctness=eval(TestExpression) and inquirer.prompt([inquirer.Confirm("answer",message="Do you believe the expression {} is true".format(TestExpression.replace("&"," and ").replace("|"," or ").replace("^"," xor ")))])["answer"]
+    if Correctness:
+        Printing("You are correct.",enddelay=2)
+        PointsDictionary["Logic Question"].correct()
+    else:
+        Printing("You are unfortunately incorrect",enddelay=2)
+        PointsDictionary["Logic Question"].incorrect()
+
     '''
     Printing("I am thinking of a random kid's grade. If you are within 10 of his range, you will get a point. If you are greater than him, I will give you two points\n")
     Printing("What is your average grade: ")
