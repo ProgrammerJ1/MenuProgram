@@ -100,22 +100,6 @@ def LogicTest():
     else:
         Printing("You are unfortunately incorrect",enddelay=2)
         PointsDictionary["Logic Question"].incorrect()
-
-    '''
-    Printing("I am thinking of a random kid's grade. If you are within 10 of his range, you will get a point. If you are greater than him, I will give you two points\n")
-    Printing("What is your average grade: ")
-    KidsGrade=random.randint(60,100)
-    UserGrade=int(input())
-    if abs(KidsGrade-UserGrade)<10:
-        Printing("Your getting about the same grade as he is.\n")
-        PointsDictionary["Logic Question"].correct(2)
-    elif KidsGrade>UserGrade:
-        Printing("You can do better next time.\n")
-        PointsDictionary["Logic Question"].incorrect(2)
-    else:
-        Printing("Wow! Your doing better than he is.\n")
-        PointsDictionary["Logic Question"].correct(2)
-    '''
 def GuessingGame():
     Num=random.randint(1,100)
     Printing("I have a number in my head, what is it?: ".format(Num))
