@@ -21,7 +21,6 @@ class User:
         self.Age=b
         self.FavoriteColor=ColorsDict[c]
         print(self.FavoriteColor)
-
 UndefinedUserStats=User()
 UserStats:User=User()
 
@@ -114,6 +113,17 @@ def LogicTest():
     else:
         Printing("You are unfortunately incorrect",enddelay=2)
         PointsDictionary["Logic Question"].incorrect()
+def SlowMoTextDisplay():
+    Printing("How many times would you like to print your string?: ")
+    NumberofTimestoPrint=int(input())
+    Printing("Enter your string: ")
+    String=input()
+    for i in range(NumberofTimestoPrint):
+        Printing("Enter in seconds how long you want to wait before printing another character: ")
+        chardelay=float(input())
+        Printing("Enter in seconds how long you want to wait at the end: ")
+        afterdelay=float(input())
+        Printing("{}\n".format(String),chardelay,afterdelay)
 def GuessingGame():
     global PointsDictionary, UserStats
     Num=random.randint(0,100)
@@ -165,6 +175,7 @@ def Menu():
         "Answer a math question for a point":MathQuestion,
         "Answer a rotation question for a point":RotationOption,
         "Answer a logic question":LogicTest,
+        "Print your text in slow motion":SlowMoTextDisplay,
         "Guess a number for a point":GuessingGame,
         "Tell me about yourself":PersonalInformation,
         "Play a game with advanced guessing": OnePlayerGame,
