@@ -25,8 +25,6 @@ class User:
 UndefinedUserStats=User()
 UserStats:User=User()
 
-CheckifUserStatsDefined()
-
 def Printing(String:str,delay:float=0.0625,enddelay:float=1):
     for i in String:
         print(i,end="",flush=True)
@@ -51,7 +49,7 @@ def MathQuestion():
         Printing("Correct\n")
         PointsDictionary["Math Question"].correct()
 def RotationOption():
-    global PointsDictionary
+    global PointsDictionary, UserStats
     nums=[]
     Size=random.randint(5,10)
     for i in range(Size):
@@ -101,6 +99,7 @@ def BooleanExpressionGenerator()->str:
     return BooleanExpression
 
 def LogicTest():
+    global PointsDictionary, UserStats
     TestExpression=""
     if (random.randint(0,1)):
         BitwiseSymbol=["&","|","^"][random.randint(0,2)]
@@ -116,6 +115,7 @@ def LogicTest():
         Printing("You are unfortunately incorrect",enddelay=2)
         PointsDictionary["Logic Question"].incorrect()
 def GuessingGame():
+    global PointsDictionary, UserStats
     Num=random.randint(0,100)
     Printing("I have a number in my head from 0-100 in my head, what is it?: ".format(Num))
     GuessedNum=int(input())
@@ -125,7 +125,8 @@ def GuessingGame():
     else:
         Printing("Incorrect, the number was {}\n".format(Num))
         PointsDictionary["Guessing Game"].incorrect()
-def PersonalInformation():
+def PersonalInformation()->bool:
+    global PointsDictionary, UserStats
     Printing("What is your name: ")
     Name=input()
     Printing("What is your age: ")
@@ -133,7 +134,9 @@ def PersonalInformation():
     Printing("What is your favorite color: ")
     FavColor=inquirer.prompt(inquirer.List("color",message="What is your favorite color?: ",choices=["Black", "Blue", "Cyan", "Green", "Magenta", "White", "Yellow"]))["color"]
     UserStats=User(Name,Age,FavColor)
+    return True
 def OnePlayerGame():
+    global PointsDictionary, UserStats
     ComparisonOperators=["==",">","<",">=","<="]
     ComparisonIndex=random.randint(0,4)
     ComparisonOperator=ComparisonOperators[ComparisonIndex]
@@ -152,6 +155,7 @@ def OnePlayerGame():
         Printing("You unfortunately failed, my number was {}".format(a), enddelay=2)
         PointsDictionary["One Player Game"].incorrect()
 def Quit():
+    global PointsDictionary, UserStats
     #Print all the points and stats of the user
     Printing("Goodbye\n")
     print(colorama.Fore.RESET)
@@ -176,7 +180,8 @@ def Menu():
     ]
     while True:
         answer: str=str(inquirer.prompt(questions)["Option"])
-        OptionsDict[answer]()
+        if OptionsDict[answer]():
+            OptionsDict.pop(answer)
 
 Menu()
 
