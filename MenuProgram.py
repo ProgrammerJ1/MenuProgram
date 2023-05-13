@@ -16,7 +16,7 @@ PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Que
 Color=None
 ColorsDict={"Black":colorama.Fore.BLACK,"Blue":colorama.Fore.BLUE,"Cyan":colorama.Fore.CYAN,"Green":colorama.Fore.GREEN,"Magenta":colorama.Fore.MAGENTA,"White":colorama.Fore.WHITE,"Yellow":colorama.Fore.YELLOW,"":""}
 class User:
-    def __init__(self,a:str="",b:int=-1,c:str=""):
+    def __init__(self,a:str="User",b:int=-1,c:str=""):
         self.Name=a
         self.Age=b
         self.FavoriteColor=ColorsDict[c]
