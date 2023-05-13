@@ -16,7 +16,7 @@ def Printing(String:str,delay:float=0.0625,enddelay:float=1):
         print(i,end="",flush=True)
         time.sleep(delay)
     time.sleep(enddelay)
-PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade()}
+PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade(),"One Player Game":Grade()}
 def MathQuestion():
     global PointsDictionary
     Choice=0
@@ -110,6 +110,23 @@ def GuessingGame():
     else:
         Printing("Incorrect, the number was {}\n".format(Num))
         PointsDictionary["Guessing Game"].incorrect()
+def OnePlayerGame():
+    ComparisonOperators=["==",">","<",">=","<="]
+    ComparisonIndex=random.randint(0,4)
+    ComparisonOperator=ComparisonOperators[ComparisonIndex]
+    a=0
+    b=random.randint(0,100)
+    Printing("I have a number from 0,100 in my head, you number has to be {} mine, and it has to be in my range\n".format([" equal to "," greater than "," less than "," greater than or equal to "," less than or equal to "][ComparisonIndex]),enddelay=2)
+    Printing("Enter your number: ")
+    a=int(input())
+    if 0>a or a>100:
+        Printing("You do not get to use an invalid nunber you cheater!!!")
+        PointsDictionary["One Player Game"].incorrect(2)
+    elif (eval("a{}b".format(ComparisonOperator))):
+        Printing("You succeded, my number was {}".format(a), enddelay=2)
+        PointsDictionary["One Player Game"].correct()
+    else:
+        PointsDictionary["One Player Game"].incorrect()
 def Quit():
     #Print all the points and stats of the user
     Printing("Goodbye\n")
@@ -127,7 +144,7 @@ def Menu():
         inquirer.List(
             "Option",
             message="What would would you like to do?",
-            choices=["Answer a math question for a point","Answer a rotation question for a point","Answer a logic question","Guess a number for a point","Quit"]
+            choices=OptionsDict.keys()
         )
     ]
     while True:
