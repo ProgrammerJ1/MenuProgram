@@ -13,7 +13,7 @@ class Grade:
         self.Points+=worth
     def incorrect(self,worth: int=1):
         self.Points+=worth
-PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade(),"One Player Game":Grade()}
+PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade(),"One Player Game":Grade(),"Chatbot":Grade()}
 Color=None
 ColorsDict={"Black":colorama.Fore.BLACK,"Blue":colorama.Fore.BLUE,"Cyan":colorama.Fore.CYAN,"Green":colorama.Fore.GREEN,"Magenta":colorama.Fore.MAGENTA,"White":colorama.Fore.WHITE,"Yellow":colorama.Fore.YELLOW,"":""}
 class User:
@@ -455,6 +455,8 @@ def Chatbot():
 		print("This was an enjoyable chat. I hope to talk to you again")
 	else:
 		print("You might be potential best friend material.")
+	PointsDictionary["Chatbot"].correct(Points)
+	PointsDictionary["Chatbot"].incorrect(25-Points)
 
 def Quit():
     global PointsDictionary, UserStats
