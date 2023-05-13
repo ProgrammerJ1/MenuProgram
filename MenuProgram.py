@@ -358,6 +358,7 @@ def Chatbot():
 				Dots(18)
 				for i in "You should have spent your skill points on grey matter for your brain, because it lacks it.\n":
 					print(i,end="",flush=True)
+					time.sleep(0.125)
 			else:
 				print("Lame sport")
 	
@@ -456,7 +457,7 @@ def Chatbot():
 	else:
 		print("You might be potential best friend material.")
 	PointsDictionary["Chatbot"].correct(Points)
-	PointsDictionary["Chatbot"].incorrect(25-Points)
+	PointsDictionary["Chatbot"].incorrect(23-Points)
 
 def Quit():
     global PointsDictionary, UserStats
@@ -473,6 +474,7 @@ def Menu():
         "Guess a number for a point":GuessingGame,
         "Tell me about yourself":PersonalInformation,
         "Play a game with advanced guessing": OnePlayerGame,
+		"Talk to a chatbot":Chatbot,
         "Quit":Quit
     }
     Printing("Welcome to the J Menu\n",enddelay=2)
