@@ -2,6 +2,7 @@ import time
 import types
 import random
 import inquirer
+import colorama
 class Grade:
     def __init__(self) -> None:
         self.Score=0
@@ -11,14 +12,28 @@ class Grade:
         self.Points+=worth
     def incorrect(self,worth: int=1):
         self.Points+=worth
+PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade(),"One Player Game":Grade()}
+Color=None
+ColorsDict={"Black":colorama.Fore.BLACK,"Blue":colorama.Fore.BLUE,"Cyan":colorama.Fore.CYAN,"Green":colorama.Fore.GREEN,"Magenta":colorama.Fore.MAGENTA,"White":colorama.Fore.WHITE,"Yellow":colorama.Fore.YELLOW,"":""}
+class User:
+    def __init__(self,a:str="",b:int=-1,c:str=""):
+        self.Name=a
+        self.Age=b
+        self.FavoriteColor=ColorsDict[c]
+        print(self.FavoriteColor)
+
+UndefinedUserStats=User()
+UserStats:User=User()
+
+CheckifUserStatsDefined()
+
 def Printing(String:str,delay:float=0.0625,enddelay:float=1):
     for i in String:
         print(i,end="",flush=True)
         time.sleep(delay)
     time.sleep(enddelay)
-PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade(),"One Player Game":Grade()}
 def MathQuestion():
-    global PointsDictionary
+    global PointsDictionary, UserStats
     Choice=0
     Operations=["{}+{}","{}-{}","{}*{}","{}//{}","{}%{}","{}/{}"]
     a=random.randint(1,10)
@@ -101,8 +116,8 @@ def LogicTest():
         Printing("You are unfortunately incorrect",enddelay=2)
         PointsDictionary["Logic Question"].incorrect()
 def GuessingGame():
-    Num=random.randint(1,100)
-    Printing("I have a number in my head, what is it?: ".format(Num))
+    Num=random.randint(0,100)
+    Printing("I have a number in my head from 0-100 in my head, what is it?: ".format(Num))
     GuessedNum=int(input())
     if GuessedNum==Num:
         Printing("Correct, you get a point\n")
@@ -110,26 +125,36 @@ def GuessingGame():
     else:
         Printing("Incorrect, the number was {}\n".format(Num))
         PointsDictionary["Guessing Game"].incorrect()
+def PersonalInformation():
+    Printing("What is your name: ")
+    Name=input()
+    Printing("What is your age: ")
+    Age=int(input())
+    Printing("What is your favorite color: ")
+    FavColor=inquirer.prompt(inquirer.List("color",message="What is your favorite color?: ",choices=["Black", "Blue", "Cyan", "Green", "Magenta", "White", "Yellow"]))["color"]
+    UserStats=User(Name,Age,FavColor)
 def OnePlayerGame():
     ComparisonOperators=["==",">","<",">=","<="]
     ComparisonIndex=random.randint(0,4)
     ComparisonOperator=ComparisonOperators[ComparisonIndex]
     a=0
     b=random.randint(0,100)
-    Printing("I have a number from 0,100 in my head, you number has to be {} mine, and it has to be in my range\n".format([" equal to "," greater than "," less than "," greater than or equal to "," less than or equal to "][ComparisonIndex]),enddelay=2)
+    Printing("I have a number from 0-100 in my head, your number has to be {} mine, and it has to be in my range\n".format([" equal to "," greater than "," less than "," greater than or equal to "," less than or equal to "][ComparisonIndex]),enddelay=2)
     Printing("Enter your number: ")
     a=int(input())
     if 0>a or a>100:
         Printing("You do not get to use an invalid nunber you cheater!!!")
         PointsDictionary["One Player Game"].incorrect(2)
     elif (eval("a{}b".format(ComparisonOperator))):
-        Printing("You succeded, my number was {}".format(a), enddelay=2)
+        Printing("You succeeded, my number was {}".format(a), enddelay=2)
         PointsDictionary["One Player Game"].correct()
     else:
+        Printing("You unfortunately failed, my number was {}".format(a), enddelay=2)
         PointsDictionary["One Player Game"].incorrect()
 def Quit():
     #Print all the points and stats of the user
     Printing("Goodbye\n")
+    print(colorama.Fore.RESET)
     exit(0)
 def Menu():
     OptionsDict={
@@ -137,6 +162,8 @@ def Menu():
         "Answer a rotation question for a point":RotationOption,
         "Answer a logic question":LogicTest,
         "Guess a number for a point":GuessingGame,
+        "Tell me about yourself":PersonalInformation,
+        "Play a game with advanced guessing": OnePlayerGame,
         "Quit":Quit
     }
     Printing("Welcome to the J Menu\n",enddelay=2)
