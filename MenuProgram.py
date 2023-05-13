@@ -3,6 +3,7 @@ import types
 import random
 import inquirer
 import colorama
+import datetime
 class Grade:
     def __init__(self) -> None:
         self.Score=0
@@ -164,6 +165,297 @@ def OnePlayerGame():
     else:
         Printing("You unfortunately failed, my number was {}".format(a), enddelay=2)
         PointsDictionary["One Player Game"].incorrect()
+def Chatbot():
+	Greetings=""
+	
+	currenthour=datetime.datetime.now().hour
+	
+	if currenthour>=6 and currenthour<12:
+		Greetings="Good morning"
+	elif currenthour>=12 and currenthour<18:
+		Greetings="Good afternoon"
+	else:
+		Greetings="Good evening"
+	
+	Questions=["How are you feeling today?","How many siblings do you have?","How many pets do you have?","What color is your hair?","How old are you?","What is your favorite animal?","What is your favorite sport to watch?","What country would you like to visit next?","What is your favorite color?","What is your favorite number?"]
+	Points: int=0
+	
+	def Dots(x=3):
+		for i in range(x):
+			print(".",end="",flush=True)
+			time.sleep(0.5)
+		print("\n",end="")
+	
+	def FeelingRes():
+		global Points
+		Feeling: str=input("{}, {}: ".format(Greetings,Questions[0]))
+		StrongPosRes=["better than yesterday","happy","amazing",]
+		PosRes=["good","fine"]
+		NeutralRes=["ok","alright"]
+		NegativeRes=["sad"]
+		StrongNegativeRes=["depressed"]
+		if Feeling.lower() in StrongPosRes:
+			Points+=3
+			print("Very nice")
+		elif Feeling.lower() in PosRes:
+			print("Glad to hear that.")
+			Points+=2
+		elif Feeling.lower() in NegativeRes:
+			print("I am sorry to hear that.")
+			Points+=2
+		elif Feeling.lower() in NeutralRes:
+			print("Alright then.")
+			Points+=1
+		elif Feeling.lower() in StrongNegativeRes:
+			Points+=3
+			print("I am so sorry hear that.")
+		else:
+			Dots()
+			print("🙄")
+			time.sleep(0.5)
+			print("Next Question")
+	
+	def Sibs():
+		global Points
+		NumofSibs: int
+		
+		SibsRes=["You're not very bright are you.","Whatever, if you don't want to answer this question let's move on.","Ah, an only child. I never thought I would meet one of my own,","well not exactly, but I might as well be one.","So you have a sibling, I don't live with mine.","So you have {} siblings. I don't live with my siblings. They are already adults who have their own lives."]
+		
+		try:
+			NumofFrats=input("{}: ".format(Questions[1]))
+			x=int(NumofFrats)
+		except ValueError:
+			if Points==0:
+				Dots()
+				print(SibsRes[0])
+			else:
+				Dots()
+				print(SibsRes[1])
+		else:
+			NumofSibs=x
+			if NumofSibs<0:
+				Dots()
+				print(SibsRes[1])
+			elif NumofSibs==0:
+				print(SibsRes[2])
+				time.sleep(0.5)
+				print(SibsRes[3])
+				Points+=2
+			elif NumofSibs==1:
+				print(SibsRes[4])
+				Points+=1
+			else:
+				print(SibsRes[5].format(NumofSibs))
+	
+	def Pets():
+		global Points
+	
+		PetsRes=["I HATE YOU! ","Why did you waste my time!","Well I guess the place where you keep your pets made a deal with the universe to allow it to defy reality to for you to keep {} amount of pets","Well I guess the place where you keep your pets made deal with the universe to allow it to defy reality to allow to keep {} amount of pets","Ah you are petless like me.","Cherish your single pet.","Cherish your pets."]
+		Pets: int
+		try:
+			NumofAnimals=input("{}: ".format(Questions[2]))
+			x=int(NumofAnimals)
+		except ValueError:
+			if Points==0:
+				Dots()
+				for i in range(3):
+					print(PetsRes[0])
+					time.sleep(0.5)
+				print(PetsRes[1])
+			else:
+				print(PetsRes[2].format(NumofAnimals))
+		else:
+			Pets=x
+			if Pets<0:
+				Dots()
+				print(PetsRes[3].format(NumofAnimals))
+			elif Pets==0:
+				print(PetsRes[4])
+				Points+=2
+			elif Pets==1:
+				print(PetsRes[5])
+				Points+=1
+			else:
+				print(PetsRes[6])
+				Points+=1
+	
+	def HairColorFunc():
+		global Points
+		UsualHairColor=["brown","blonde","red","black"]
+		BaldingHairColor=["white","gray"]
+		UnusualHairColor=["blue","green","yellow","purle"]
+		HairColor=input("{}: ".format(Questions[3]))
+		if HairColor in UsualHairColor:
+			Points+=2
+			print("A great hair color")
+		elif HairColor in BaldingHairColor:
+			Points+=2
+			print("I'm sorry that you are balding.")
+		elif HairColor in UnusualHairColor:
+			print("Hm, interesting, are you really. That's unusual")
+			Points+=1
+		else:
+			if Points==0:
+				for i in "DIDN\'T YOUR FAMILY TEACH YOU TO NOT WASTE PEOPLE\'S TIME!!!!!\n":
+					print(i,end="",flush=True)
+					time.sleep(0.125)
+			else:
+				print("That's not even a color, my dopey conversation partner")
+	def Age():
+		global Points
+		Age: int
+		try:
+			NumofYears=input("{}: ".format(Questions[4]))
+			x=int(NumofYears)
+		except ValueError:
+			if Points==0:
+				Dots(6)
+			else:
+				print("You physically cannot be {} age".format(NumofYears))
+		else:
+			Age=x
+			if Age<0:
+				print("You cannot be a negative age but whatever")
+			elif Age<=0 and Age>=3:
+				print("I cannot believe a baby knows how to use technology, you are a liar")
+			elif Age<=4 and Age>=12:
+				print("Your still a child, like I once was")
+				Points+=1
+			elif Age==13 or (Age<=15 and Age>=17):
+				print("Your a teenager like me")
+				Points+=2
+			elif Age==14:
+				print("Your my age")
+				Points+=3
+			else:
+				print("Your an adult, that's nice, you get freedom.")
+	def FavAnimalFunc():
+		global Points
+		FavAnimals=["lions", "leopards", "elephants", "rhinos", "buffalos","lion", "leopard", "elephant", "rhino", "buffalo"]
+		FavoriteAnimal=input("{}: ".format(Questions[5]))
+		if FavoriteAnimal in FavAnimals:
+			print("Wow, good chocie")
+			Points+=1
+		else:
+			if Points==0:
+				print("Wow, the animals is lame like you")
+			else:
+				print("Wow, lame")
+			print("You have bad taste.")
+	def Sports():
+		global Points
+		FavoriteSport1=["baseball","volleyball","soccer","lacrosse"]
+		FavoriteSport2=["football","rugby","golf"]
+		FavoriteSport=input("{}: ".format(Questions[6]))
+		if FavoriteSport in FavoriteSport1:
+			Points+=2
+			print("Wow, nice choice!")
+		elif FavoriteSport in FavoriteSport2:
+			Points+=1
+			print("Interesting choice, though not my favorite")
+		else:
+			if Points==0:
+				Dots(18)
+				for i in "You should have spent your skill points on grey matter for your brain, because it lacks it.\n":
+					print(i,end="",flush=True)
+			else:
+				print("Lame sport")
+	
+	def FavCountry():
+		global Points
+		Countries2=["Italy","France","Spain"]
+		Countries3=["Thailand","Germany","India"]
+		Country=input("{}: ".format(Questions[7]))
+		if Country=="United States":
+			Points+=4
+			print("I actually live in the United States of America!")
+		elif Country=="Greece":
+			Points+=3
+			print("I actually am going to Greece at the time of writing this program")
+		elif Country in Countries2:
+			Points+=2
+			print("That's a nice tourist destination")
+		elif Country in Countries3:
+			Points+=1
+			print("Interesting choice")
+		elif Points==0:
+			for i in range(94):
+				print("😡",end="",flush=True)
+				time.sleep(0.125)
+			print("\n",end="",flush=True)
+		else:
+			print("You have bad taste.")
+	
+	
+	def Color():
+	
+		global Points
+		Colors1=["blue","brown","orange","purple"]
+		Colors2=["yellow","red","black","green"]
+		Color=input("{}: ".format(Questions[8]))
+		if Color in Colors1:
+			Points+=2
+			print("A strong color choice")
+		elif Color in Colors2:
+			Points+=1
+			print("Wow, interesting choice")
+		elif Points==0:
+			for i in "YYYYYYYYYYEEEEEEEEEEEESSSSSSSSSSSS!!!!!!!!!!!!!\n":
+				print(i,end="",flush=True)
+				time.sleep(0.125)
+			time.sleep(0.25)
+			for i in "Just one more question before I can give my verdict and stop talking to you\n":
+				print(i,end="",flush=True)
+				time.sleep(0.125)
+		else:
+			print("Thats not a good color, if it even exists.")
+	
+	def FavNumber():
+		global Points
+		FavNumb: float
+		try:
+			FavNum=input("{}: ".format(Questions[9]))
+			x=float(FavNum)
+		except ValueError:
+			if Points==0:
+				Dots(25)
+				print("Finally, ",end="",flush=True)
+				
+				print("It's over",flush=True)
+			else:
+				print("That is no number")
+		else:
+			FavNumb=x
+			if FavNumb==18:
+				print("That's my favorite number too!")
+				Points+=2
+			else:
+				print("Thats an intersting choice, for favorite number")
+				Points+=1
+	FeelingRes()
+	Sibs()
+	Pets()
+	HairColorFunc()
+	Age()
+	FavAnimalFunc()
+	Sports()
+	FavCountry()
+	Color()
+	FavNumber()
+	if Points<10:
+		for i in "Well, this was a nightmare, thank you for being my conversation partner. ":
+			print(i,end="",flush=True)
+			time.sleep(0.125)
+		for i in "Now get out of here.":
+			print(i,end="",flush=True)
+			time.sleep(0.5)
+	elif Points<20:
+		print("This was a pleasant conversation")
+	elif Points<22:
+		print("This was an enjoyable chat. I hope to talk to you again")
+	else:
+		print("You might be potential best friend material.")
+
 def Quit():
     global PointsDictionary, UserStats
     #Print all the points and stats of the user
