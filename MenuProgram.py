@@ -477,15 +477,8 @@ def Menu():
 		"Quit":Quit
 	}
 	Printing("Welcome to the J Menu\n",enddelay=2)
-	questions=[
-		inquirer.List(
-			"Option",
-			message="What would would you like to do?",
-			choices=OptionsDict.keys()
-		)
-	]
 	while True:
-		answer: str=str(inquirer.prompt(questions)["Option"])
+		answer: str=str(inquirer.prompt([inquirer.List("Option",message="What would would you like to do?",choices=OptionsDict.keys())])["Option"])
 		if OptionsDict[answer]():
 			OptionsDict.pop(answer)
 Menu()
