@@ -224,6 +224,7 @@ def Chatbot():
 	
 	def FeelingRes():
 		global PointsDictionary
+		Points: int
 		Printing("{}, {}: ".format(Greetings,Questions[0]))
 		Feeling: str=input()
 		StrongPosRes=["better than yesterday","happy","amazing",]
@@ -232,28 +233,30 @@ def Chatbot():
 		NegativeRes=["sad"]
 		StrongNegativeRes=["depressed"]
 		if Feeling.lower() in StrongPosRes:
-			Points+=3
+			Points=3
 			Printing("Very nice")
 		elif Feeling.lower() in PosRes:
 			Printing("Glad to hear that.")
-			Points+=2
+			Points=2
 		elif Feeling.lower() in NegativeRes:
 			Printing("I am sorry to hear that.")
-			Points+=2
+			Points=2
 		elif Feeling.lower() in NeutralRes:
 			Printing("Alright then.")
-			Points+=1
+			Points=1
 		elif Feeling.lower() in StrongNegativeRes:
-			Points+=3
+			Points=3
 			Printing("I am so sorry hear that.")
 		else:
 			Dots()
 			Printing("🙄")
 			time.sleep(0.5)
 			Printing("Next Question")
+		PointsDictionary["Chatbot"].partcredit(Points,3)
 	
 	def Sibs():
 		global PointsDictionary
+		Points: int
 		NumofSibs: int
 		
 		SibsRes=["You're not very bright are you.","Whatever, if you don't want to answer this question let's move on.","Ah, an only child. I never thought I would meet one of my own,","well not exactly, but I might as well be one.","So you have a sibling, I don't live with mine.","So you have {} siblings. I don't live with my siblings. They are already adults who have their own lives."]
@@ -277,16 +280,17 @@ def Chatbot():
 				Printing(SibsRes[2])
 				time.sleep(0.5)
 				Printing(SibsRes[3])
-				Points+=2
+				Points=2
 			elif NumofSibs==1:
 				Printing(SibsRes[4])
-				Points+=1
+				Points=1
 			else:
 				Printing(SibsRes[5].format(NumofSibs))
+		PointsDictionary["Chatbot"].partcredit(Points,2)
 	
 	def Pets():
 		global PointsDictionary
-	
+		Points: int
 		PetsRes=["I HATE YOU! ","Why did you waste my time!","Well I guess the place where you keep your pets made a deal with the universe to allow it to defy reality to for you to keep {} amount of pets","Well I guess the place where you keep your pets made deal with the universe to allow it to defy reality to allow to keep {} amount of pets","Ah you are petless like me.","Cherish your single pet.","Cherish your pets."]
 		Pets: int
 		Printing("{}: ".format(Questions[2]))
@@ -308,37 +312,41 @@ def Chatbot():
 				Printing(PetsRes[3].format(NumofAnimals))
 			elif Pets==0:
 				Printing(PetsRes[4])
-				Points+=2
+				Points=2
 			elif Pets==1:
 				Printing(PetsRes[5])
-				Points+=1
+				Points=1
 			else:
 				Printing(PetsRes[6])
-				Points+=1
+				Points=1
+		PointsDictionary["Chatbot"].partcredit(Points,2)
 	
 	def HairColorFunc():
 		global PointsDictionary
+		Points: int
 		UsualHairColor=["brown","blonde","red","black"]
 		BaldingHairColor=["white","gray"]
 		UnusualHairColor=["blue","green","yellow","purle"]
 		Printing("{}: ".format(Questions[3]))
 		HairColor=input()
 		if HairColor in UsualHairColor:
-			Points+=2
+			Points=2
 			Printing("A great hair color")
 		elif HairColor in BaldingHairColor:
-			Points+=2
+			Points=2
 			print("I'm sorry that you are balding.")
 		elif HairColor in UnusualHairColor:
 			Printing("Hm, interesting, are you really. That's unusual")
-			Points+=1
+			Points=1
 		else:
 			if Points==0:
 				Printing("DIDN\'T YOUR FAMILY TEACH YOU TO NOT WASTE PEOPLE\'S TIME!!!!!\n",0.125)
 			else:
 				Printing("That's not even a color, my dopey conversation partner")
+		PointsDictionary["Chatbot"].partcredit(Points,2)
 	def Age():
 		global PointsDictionary
+		Points: int
 		Age: int
 		try:
 			Printing("{}: ".format(Questions[4]))
@@ -357,29 +365,32 @@ def Chatbot():
 				Printing("I cannot believe a baby knows how to use technology, you are a liar")
 			elif Age<=4 and Age>=12:
 				Printing("Your still a child, like I once was")
-				Points+=1
+				Points=1
 			elif Age==13 or (Age<=15 and Age>=17):
 				Printing("Your a teenager like me")
-				Points+=2
+				Points=2
 			elif Age==14:
 				Printing("Your my age")
-				Points+=3
+				Points=3
 			else:
 				Printing("Your an adult, that's nice, you get freedom.")
+			PointsDictionary["Chatbot"].partcredit(Points,3)
 	def FavAnimalFunc():
 		global PointsDictionary
+		Points: int
 		FavAnimals=["lions", "leopards", "elephants", "rhinos", "buffalos","lion", "leopard", "elephant", "rhino", "buffalo"]
 		Printing("{}: ".format(Questions[5]))
 		FavoriteAnimal=input()
 		if FavoriteAnimal in FavAnimals:
 			Printing("Wow, good chocie")
-			Points+=1
+			Points=1
 		else:
 			if Points==0:
 				Printing("Wow, the animals is lame like you")
 			else:
 				Printing("Wow, lame")
 			Printing("You have bad taste.")
+		PointsDictionary["Chatbot"].partcredit(Points,1)
 	def Sports():
 		global PointsDictionary
 		FavoriteSport1=["baseball","volleyball","soccer","lacrosse"]
@@ -387,10 +398,10 @@ def Chatbot():
 		Printing("{}: ".format(Questions[6]))
 		FavoriteSport=input()
 		if FavoriteSport in FavoriteSport1:
-			Points+=2
+			Points=2
 			Printing("Wow, nice choice!")
 		elif FavoriteSport in FavoriteSport2:
-			Points+=1
+			Points=1
 			Printing("Interesting choice, though not my favorite")
 		else:
 			if Points==0:
@@ -398,57 +409,59 @@ def Chatbot():
 				Printing("You should have spent your skill points on grey matter for your brain, because it lacks it.\n",delay=0.125)
 			else:
 				Printing("Lame sport")
+		PointsDictionary["Chatbot"].partcredit(Points,2)
 	
 	def FavCountry():
 		global PointsDictionary
+		Points: int
 		Countries2=["Italy","France","Spain"]
 		Countries3=["Thailand","Germany","India"]
 		Printing("{}: ".format(Questions[7]))
 		Country=input()
 		if Country=="United States":
-			Points+=4
+			Points=4
 			Printing("I actually live in the United States of America!")
 		elif Country=="Greece":
-			Points+=3
+			Points=3
 			Printing("I actually am going to Greece at the time of writing this program")
 		elif Country in Countries2:
-			Points+=2
+			Points=2
 			Printing("That's a nice tourist destination")
 		elif Country in Countries3:
-			Points+=1
+			Points=1
 			Printing("Interesting choice")
 		elif Points==0:
 			Printing("😡"*94,delay=0.125)
 		else:
 			Printing("You have bad taste.")
+		PointsDictionary["Chatbot"].partcredit(Points,4)
 	
 	
 	def Color():
 	
 		global PointsDictionary
+		Points: int
 		Colors1=["blue","brown","orange","purple"]
 		Colors2=["yellow","red","black","green"]
 		Printing("{}: ".format(Questions[8]))
 		Color=input()
 		if Color in Colors1:
-			Points+=2
+			Points=2
 			Printing("A strong color choice")
 		elif Color in Colors2:
-			Points+=1
+			Points=1
 			Printing("Wow, interesting choice")
 		elif Points==0:
-			for i in "YYYYYYYYYYEEEEEEEEEEEESSSSSSSSSSSS!!!!!!!!!!!!!\n":
-				Printing(i,end="",flush=True)
-				time.sleep(0.125)
+			Printing("YYYYYYYYYYEEEEEEEEEEEESSSSSSSSSSSS!!!!!!!!!!!!!\n",0.125,0.25)
 			time.sleep(0.25)
-			for i in "Just one more question before I can give my verdict and stop talking to you\n":
-				Printing(i,end="",flush=True)
-				time.sleep(0.125)
+			Printing("Just one more question before I can give my verdict and stop talking to you\n",0.125)
 		else:
 			Printing("Thats not a good color, if it even exists.")
+		PointsDictionary["Chatbot"].partcredit(Points,2)
 	
 	def FavNumber():
 		global PointsDictionary
+		Points: int
 		FavNumb: float
 		try:
 			Printing("{}: ".format(Questions[9]))
@@ -466,10 +479,11 @@ def Chatbot():
 			FavNumb=x
 			if FavNumb==18:
 				Printing("That's my favorite number too!")
-				Points+=2
+				Points=2
 			else:
 				Printing("Thats an intersting choice, for favorite number")
-				Points+=1
+				Points=1
+		PointsDictionary["Chatbot"].partcredit(Points,2)
 	FeelingRes()
 	Sibs()
 	Pets()
@@ -480,21 +494,21 @@ def Chatbot():
 	FavCountry()
 	Color()
 	FavNumber()
-	if Points<10:
+	FormerScore=PointsDictionary["Chatbot"].Score
+	FormerScore=PointsDictionary["Chatbot"].Points
+	if PointsDictionary["Chatbot"].Score<10:
 		for i in "Well, this was a nightmare, thank you for being my conversation partner. ":
 			Printing(i,end="",flush=True)
 			time.sleep(0.125)
 		for i in "Now get out of here.":
 			Printing(i,end="",flush=True)
 			time.sleep(0.5)
-	elif Points<20:
+	elif PointsDictionary["Chatbot"].Score<20:
 		Printing("This was a pleasant conversation")
-	elif Points<22:
+	elif Points<23:
 		Printing("This was an enjoyable chat. I hope to talk to you again")
 	else:
 		Printing("You might be potential best friend material.")
-	PointsDictionary["Chatbot"].correct(Points)
-	PointsDictionary["Chatbot"].incorrect(23-Points)
 
 def Quit():
 	global PointsDictionary, UserStats
