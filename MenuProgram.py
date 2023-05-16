@@ -82,10 +82,10 @@ def MathQuestion():
 	c=float(input())
 	if c!=eval(Operations[Choice].format(a,b)):
 		Printing("Unfortunately, that answer is not correct.\n",enddelay=2)
-		Printing("The correct awnser is {}, {}\n",eval(Operations[Choice].format(a,b),UsersStats.Name))
+		Printing("The correct awnser is {}, {}\n",eval(Operations[Choice].format(a,b),UserStats.Name))
 		PointsDictionary["Math Question"].incorrect()
 	else:
-		Printing("Correct, {}\n".format(UsersStats.Name))
+		Printing("Correct, {}\n".format(UserStats.Name))
 		PointsDictionary["Math Question"].correct()
 def RotationOption():
 	global PointsDictionary, UserStats
@@ -111,10 +111,10 @@ def RotationOption():
 	Printing("Now, what is element {} (element 1 is the first element, as we are not using zero indexing) of the new list: ".format(Index+1))
 	x=int(input())
 	if x==nums[Index]:
-		Printing("You are correct, {}".format(UsersStats.Name),enddelay=2)
+		Printing("You are correct, {}".format(UserStats.Name),enddelay=2)
 		PointsDictionary["Rotation Question"].correct()
 	else:
-		Printing("That is incorrect, {}\n".format(UsersStats.Name),enddelay=2)
+		Printing("That is incorrect, {}\n".format(UserStats.Name),enddelay=2)
 		Printing("I will show you the rotations\n")
 		for i in RotResults:
 			Printing(i,enddelay=2)
@@ -149,13 +149,13 @@ def LogicTest():
 		TestExpression=TestExpression[1:len(TestExpression)-2]
 	Correctness=eval(TestExpression) and inquirer.prompt([inquirer.Confirm("answer",message="Do you believe the expression {} is true".format(TestExpression.replace("&"," and ").replace("|"," or ").replace("^"," xor ")))])["answer"]
 	if Correctness:
-		Printing("You are correct, {}.\n".format(UsersStats.Name),enddelay=2)
+		Printing("You are correct, {}.\n".format(UserStats.Name),enddelay=2)
 		PointsDictionary["Logic Question"].correct()
 	else:
-		Printing("You are unfortunately incorrect, {}.".format(UsersStats.Name),enddelay=2)
+		Printing("You are unfortunately incorrect, {}.".format(UserStats.Name),enddelay=2)
 		PointsDictionary["Logic Question"].incorrect()
 def SlowMoTextDisplay():
-	Printing("How many times would you like to print your string, {}?: ".format(UsersStats.Name))
+	Printing("How many times would you like to print your string, {}?: ".format(UserStats.Name))
 	NumberofTimestoPrint=int(input())
 	Printing("Enter your string: ")
 	String=input()
@@ -171,10 +171,10 @@ def GuessingGame():
 	Printing("I have a number in my head from 0-100 in my head, what is it?: ".format(Num))
 	GuessedNum=int(input())
 	if GuessedNum==Num:
-		Printing("Correct, you get a point, {}\n".format(UsersStats.Name))
+		Printing("Correct, you get a point, {}\n".format(UserStats.Name))
 		PointsDictionary["Guessing Game"].correct()
 	else:
-		Printing("Incorrect, the number was {},{}\n".format(Num,UsersStats.Name))
+		Printing("Incorrect, the number was {},{}\n".format(Num,UserStats.Name))
 		PointsDictionary["Guessing Game"].incorrect()
 def PersonalInformation()->bool:
 	global PointsDictionary, UserStats
@@ -198,13 +198,13 @@ def OnePlayerGame():
 	a=int(input())
 	if 0>a or a>100:
 		Printing("You do not get to use an invalid number you cheater!!! ",enddelay=2)
-		Printing("Cheater {}".format(UsersStats.Name))
+		Printing("Cheater {}".format(UserStats.Name))
 		PointsDictionary["One Player Game"].incorrect(2)
 	elif (eval("a{}b".format(ComparisonOperator))):
-		Printing("You succeeded, my number was {}, {}".format(a,UsersStats.Name), enddelay=2)
+		Printing("You succeeded, my number was {}, {}".format(a,UserStats.Name), enddelay=2)
 		PointsDictionary["One Player Game"].correct()
 	else:
-		Printing("You unfortunately failed, my number was {}".format(a,UsersStats.Name), enddelay=2)
+		Printing("You unfortunately failed, my number was {}".format(a,UserStats.Name), enddelay=2)
 		PointsDictionary["One Player Game"].incorrect()
 def Chatbot():
 	Greetings=""
