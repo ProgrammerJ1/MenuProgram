@@ -180,8 +180,12 @@ def PersonalInformation()->bool:
 	global PointsDictionary, UserStats
 	Printing("What is your name: ")
 	Name=input()
-	Printing("What is your age: ")
-	Age=int(input())
+	Age=-1
+	if UserStats.Age!=-1:
+		Printing("What is your age: ")
+		Age=int(input())
+	else:
+		Age=UserStats.Age
 	Printing("What is your favorite color: ")
 	FavColor=inquirer.prompt([inquirer.List("color",message="What is your favorite color?: ",choices=["Black", "Blue", "Cyan", "Green", "Magenta", "White", "Yellow"])])["color"]
 	UserStats=User(Name,Age,FavColor)
@@ -496,8 +500,6 @@ def Chatbot():
 	FavCountry()
 	Color()
 	FavNumber()
-	FormerScore=PointsDictionary["Chatbot"].Score
-	FormerScore=PointsDictionary["Chatbot"].Points
 	if PointsDictionary["Chatbot"].Score<10:
 		for i in "Well, this was a nightmare, thank you for being my conversation partner. ":
 			Printing(i,end="",flush=True)
@@ -507,7 +509,7 @@ def Chatbot():
 			time.sleep(0.5)
 	elif PointsDictionary["Chatbot"].Score<20:
 		Printing("This was a pleasant conversation")
-	elif Points<23:
+	elif PointsDictionary["Chatbot"].Score<23:
 		Printing("This was an enjoyable chat. I hope to talk to you again")
 	else:
 		Printing("You might be potential best friend material.")
