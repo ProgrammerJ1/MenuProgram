@@ -164,7 +164,8 @@ def SlowMoTextDisplay():
 		chardelay=float(input())
 		Printing("Enter in seconds how long you want to wait at the end: ")
 		afterdelay=float(input())
-		Printing("{}\n".format(String),chardelay,afterdelay)
+		oscillating_animation(String,chardelay)
+		time.sleep(afterdelay)
 def GuessingGame():
 	global PointsDictionary, UserStats
 	Num=random.randint(0,100)
@@ -495,6 +496,8 @@ def Chatbot():
 	HairColorFunc()
 	if UserStats.Age==-1:
 		Age()
+	else:
+		PointsDictionary["Chatbot"].correct(3)
 	FavAnimalFunc()
 	Sports()
 	FavCountry()
