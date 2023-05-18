@@ -5,9 +5,9 @@ import inquirer
 import colorama
 import datetime
 class Grade:
-	def __init__(self) -> None:
-		self.Score=0
-		self.Points=0
+	def __init__(self,Score=0,Points=0) -> None:
+		self.Score=Score
+		self.Points=Points
 	def correct(self,worth: int=1):
 		self.Score+=worth
 		self.Points+=worth
@@ -156,12 +156,12 @@ def LogicTest():
 	else:
 		TestExpression=BooleanExpressionGenerator()
 		TestExpression=TestExpression[1:len(TestExpression)-2]
-	Correctness=eval(TestExpression) and inquirer.prompt([inquirer.Confirm("answer",message="Do you believe the expression {} is true".format(TestExpression.replace("&"," and ").replace("|"," or ").replace("^"," xor ")))])["answer"]
+	Correctness=not bool((inquirer.prompt([inquirer.Confirm("answer",message="{}Do you believe the expression {} is true".format(UserStats.FavoriteColor,TestExpression.replace("&"," and ").replace("|"," or ").replace("^"," xor ").replace("=="," equals ").replace("<="," less than or equal to ").replace(">="," greater than or equal to ").replace("<"," less than ").replace(">"," greater than ")))])["answer"])^eval(TestExpression))
 	if Correctness:
 		Printing("You are correct, {}.\n".format(UserStats.Name),enddelay=2)
 		if UserStats.Age < 10 and UserStats.Age!=-1:
 			PointsDictionary["Logic Question"].partcredit(2,1)
-			Printing("I am impressed you got that correct considering your age.\n")
+			Printing("{}, I am impressed you got that correct considering your age.\n".format(UserStats.Name))
 		else:
 			PointsDictionary["Logic Question"].correct()
 	else:
@@ -246,8 +246,8 @@ def Chatbot()->str:
 	
 	def FeelingRes():
 		global PointsDictionary
-		Points: int
-		Printing("{}, {}: ".format(Greetings,Questions[0]))
+		Points=0
+		Printing("{}, {}. {}: ".format(Greetings,UserStats.Name,Questions[0]))
 		Feeling: str=input()
 		StrongPosRes=["better than yesterday","happy","amazing",]
 		PosRes=["good","fine"]
@@ -261,14 +261,14 @@ def Chatbot()->str:
 			Printing("Glad to hear that.")
 			Points=2
 		elif Feeling.lower() in NegativeRes:
-			Printing("I am sorry to hear that.")
+			Printing("I am sorry to hear that, {}.".format(UserStats.Name))
 			Points=2
 		elif Feeling.lower() in NeutralRes:
 			Printing("Alright then.")
 			Points=1
 		elif Feeling.lower() in StrongNegativeRes:
 			Points=3
-			Printing("I am so sorry hear that.")
+			Printing("I am so sorry hear that, {}.".format(UserStats.Name))
 		else:
 			Dots()
 			Printing("🙄")
@@ -278,10 +278,10 @@ def Chatbot()->str:
 	
 	def Sibs():
 		global PointsDictionary
-		Points: int
+		Points=0
 		NumofSibs: int
 		
-		SibsRes=["You're not very bright are you.","Whatever, if you don't want to answer this question let's move on.","Ah, an only child. I never thought I would meet one of my own,","well not exactly, but I might as well be one.","So you have a sibling, I don't live with mine.","So you have {} siblings. I don't live with my siblings. They are already adults who have their own lives."]
+		SibsRes=["You're not very bright are you.","Whatever, if you don't want to answer this question let's move on.","Ah, an only child. I never thought I would meet one of my own, ","well not exactly, but I might as well be one.","So you have a sibling, I don't live with mine.","So you have {} siblings. I don't live with my siblings. They are already adults who have their own lives."]
 		Printing("{}: ".format(Questions[1]))
 		try:
 			NumofFrats=input()
@@ -312,7 +312,7 @@ def Chatbot()->str:
 	
 	def Pets():
 		global PointsDictionary
-		Points: int
+		Points=0
 		PetsRes=["I HATE YOU! ","Why did you waste my time!","Well I guess the place where you keep your pets made a deal with the universe to allow it to defy reality to for you to keep {} amount of pets","Well I guess the place where you keep your pets made deal with the universe to allow it to defy reality to allow to keep {} amount of pets","Ah you are petless like me.","Cherish your single pet.","Cherish your pets."]
 		Pets: int
 		Printing("{}: ".format(Questions[2]))
@@ -345,7 +345,7 @@ def Chatbot()->str:
 	
 	def HairColorFunc():
 		global PointsDictionary
-		Points: int
+		Points=0
 		UsualHairColor=["brown","blonde","red","black"]
 		BaldingHairColor=["white","gray"]
 		UnusualHairColor=["blue","green","yellow","purle"]
@@ -368,7 +368,7 @@ def Chatbot()->str:
 		PointsDictionary["Chatbot"].partcredit(Points,2)
 	def Age():
 		global PointsDictionary
-		Points: int
+		Points=0
 		Age: int
 		try:
 			Printing("{}: ".format(Questions[4]))
@@ -399,22 +399,23 @@ def Chatbot()->str:
 			PointsDictionary["Chatbot"].partcredit(Points,3)
 	def FavAnimalFunc():
 		global PointsDictionary
-		Points: int
+		Points=0
 		FavAnimals=["lions", "leopards", "elephants", "rhinos", "buffalos","lion", "leopard", "elephant", "rhino", "buffalo"]
 		Printing("{}: ".format(Questions[5]))
 		FavoriteAnimal=input()
 		if FavoriteAnimal in FavAnimals:
-			Printing("Wow, good chocie")
+			Printing("Wow, good choice")
 			Points=1
 		else:
 			if PointsDictionary["Chatbot"].Score==0:
-				Printing("Wow, the animals is lame like you")
+				Printing("Wow, the animal is lame like you")
 			else:
 				Printing("Wow, lame")
 			Printing("You have bad taste.")
 		PointsDictionary["Chatbot"].partcredit(Points,1)
 	def Sports():
 		global PointsDictionary
+		Points=0
 		FavoriteSport1=["baseball","volleyball","soccer","lacrosse"]
 		FavoriteSport2=["football","rugby","golf"]
 		Printing("{}: ".format(Questions[6]))
@@ -435,7 +436,7 @@ def Chatbot()->str:
 	
 	def FavCountry():
 		global PointsDictionary
-		Points: int
+		Points=0
 		Countries2=["Italy","France","Spain"]
 		Countries3=["Thailand","Germany","India"]
 		Printing("{}: ".format(Questions[7]))
@@ -458,12 +459,12 @@ def Chatbot()->str:
 			if PointsDictionary["Chatbot"].Score==0:
 				Printing("YYYYYYYYYYEEEEEEEEEEEESSSSSSSSSSSS!!!!!!!!!!!!!\n",0.125,0.25)
 				Printing("Just one more question before I can give my verdict and stop talking to you\n",0.125)
-		Printing("You have bad taste.")
+			Printing("You have bad taste.")
 		PointsDictionary["Chatbot"].partcredit(Points,4)
 	
 	def FavNumber():
 		global PointsDictionary
-		Points: int
+		Points=0
 		FavNumb: float
 		try:
 			Printing("{}: ".format(Questions[9]))
@@ -499,12 +500,8 @@ def Chatbot()->str:
 	FavCountry()
 	FavNumber()
 	if PointsDictionary["Chatbot"].Score<9:
-		for i in "Well, this was a nightmare, thank you for being my conversation partner. ":
-			Printing(i,end="",flush=True)
-			time.sleep(0.125)
-		for i in "Now get out of here.":
-			Printing(i,end="",flush=True)
-			time.sleep(0.5)
+		Printing("Well, this was a nightmare, thank you for being my conversation partner. ",0.125,2)
+		Printing("Now get out of here.",0.5,2)
 	elif PointsDictionary["Chatbot"].Score<18:
 		Printing("This was a pleasant conversation")
 	elif PointsDictionary["Chatbot"].Score<21:
@@ -521,24 +518,16 @@ def Quit():
 	Printing("You got a {}/{} on guessing numbers\n".format(PointsDictionary["Guessing Game"].Score,PointsDictionary["Guessing Game"].Points))
 	Printing("You got a {}/{} on advanced guessing\n".format(PointsDictionary["One Player Game"].Score,PointsDictionary["One Player Game"].Points))
 	Printing("You got a {}/{} on talking to the chatbot\n".format(PointsDictionary["Chatbot"].Score,PointsDictionary["Chatbot"].Points))
-	Printing("In total you got a {}/{} for tasks with points.".format(
-        sum(
-            PointsDictionary["Math Question"].Score,
-            PointsDictionary["Rotation Question"].Score,
-            PointsDictionary["Logic Question"].Score,
-            PointsDictionary["Guessing Game"].Score,
-            PointsDictionary["One Player Game"].Score,
-            PointsDictionary["Chatbot"].Score,
-        ),
-        sum(
-            PointsDictionary["Math Question"].Points,
-            PointsDictionary["Rotation Question"].Points,
-            PointsDictionary["Logic Question"].Points,
-            PointsDictionary["Guessing Game"].Points,
-            PointsDictionary["One Player Game"].Points,
-            PointsDictionary["Chatbot"].Points,
-        )
+	GlobalGrade=Grade(PointsDictionary["Math Question"].Score+PointsDictionary["Rotation Question"].Score+PointsDictionary["Logic Question"].Score+PointsDictionary["Guessing Game"].Score+PointsDictionary["One Player Game"].Score+PointsDictionary["Chatbot"].Score,PointsDictionary["Math Question"].Points+PointsDictionary["Rotation Question"].Points+PointsDictionary["Logic Question"].Points+PointsDictionary["Guessing Game"].Points+PointsDictionary["One Player Game"].Points+PointsDictionary["Chatbot"].Points)
+	Printing("In total you got a {}/{} for tasks with points.\n".format(
+        GlobalGrade.Score,GlobalGrade.Points
     ))
+	if GlobalGrade.Points==0 and GlobalGrade.Score==0:
+		Printing("Hey, wait a minute. Why did you call me up to do nothing with me.",0.03125,5)
+		Printing("Whatever")
+	elif GlobalGrade.Score/GlobalGrade.Points>=0.8 and UserStats.Age<10:
+		Printing("That is impressiving for your age",enddelay=5)
+	Printing("Anyway, thank you for your time.")
 	Printing("Goodbye, {}\n".format(UserStats.Name))
 	print(colorama.Fore.RESET)
 	exit(0)
@@ -559,13 +548,15 @@ def Menu():
 		answer: str=str(inquirer.prompt([inquirer.List("Option",message="{}What would would you like to do?".format(UserStats.FavoriteColor),choices=OptionsDict.keys())])["Option"])
 		returnres=OptionsDict[answer]()
 		if returnres:
-			OptionsDict.pop(returnres)
 			if returnres=="Tell me about yourself":
+				OptionsDict.pop(returnres)
 				OptionsDictKeys=[]
 				for i in OptionsDict.keys():
 					OptionsDictKeys.append(i)
 				for i in OptionsDictKeys:
 					OptionsDict[UserStats.FavoriteColor+i]=OptionsDict.pop(i)
+			else:
+				OptionsDict.pop(UserStats.FavoriteColor+returnres)
 Menu()
 
 
