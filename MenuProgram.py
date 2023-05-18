@@ -1,31 +1,42 @@
 import time
 import types
 import random
+import datetime
+#The following 2 imports are nots module native to python, must be installed with "pip install {module name}" or "pip3 install {module name}" if using python3
 import inquirer
 import colorama
-import datetime
+#Data structure I use to calculate and keep track of user points from tasks with [points]
 class Grade:
+	#Class initialization
 	def __init__(self,Score=0,Points=0) -> None:
 		self.Score=Score
 		self.Points=Points
+	#What to do if you get points for a task
 	def correct(self,worth: int=1):
 		self.Score+=worth
 		self.Points+=worth
+	#What to do if you get partial credit, though this can be used to grant bonus points above the allocated points for that task
 	def partcredit(self,gotten: int,worth: int):
 		self.Score+=gotten
 		self.Points+=worth
-	def incorrect(self,got: int=1,worth: int=1):
+	#What to do if the user gets no points
+	def incorrect(self,worth: int=1):
 		self.Points+=worth
+#Data structure used to manage user points for each exercise
 PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade(),"One Player Game":Grade(),"Chatbot":Grade()}
+#Data structure used to manage terminal colors. The key with the empty string is used to not make modifications to the color if there is no color provided
 ColorsDict={"Black":colorama.Fore.BLACK+colorama.Back.WHITE,"Blue":colorama.Fore.BLUE,"Cyan":colorama.Fore.CYAN,"Green":colorama.Fore.GREEN,"Magenta":colorama.Fore.MAGENTA,"White":colorama.Fore.WHITE+colorama.Back.BLACK,"Yellow":colorama.Fore.YELLOW,"":""}
+#Data structure used to record a user's personal details. These details include a name, age, and a favorite color, and are not sent to a server. Set to various default values to not interfere with the rest of the program
 class User:
+	#Class initialization, also sets the default terminal color using the colors dictionary defined above.
 	def __init__(self,a:str="User",b:int=-1,c:str=""):
 		print(ColorsDict[c])
 		self.Name=a
 		self.Age=b
 		self.FavoriteColor=ColorsDict[c]
+#Global variable used to record user stats which is initialized to Username="User",User's Age=-1,User's Favorite Color is "" in order to offer more flexibility.
 UserStats:User=User()
-
+#My function for specalized printing using a typewriter style with a customizable intercharacter delay, and an end delay specified in seconds
 def Printing(String:str,delay:float=0.0625,enddelay:float=1):
 	global UserStats
 	print(UserStats.FavoriteColor)
@@ -33,6 +44,7 @@ def Printing(String:str,delay:float=0.0625,enddelay:float=1):
 		print(i,end="",flush=True)
 		time.sleep(delay)
 	time.sleep(enddelay)
+#My function to create an oscillating animation of text with a customizable intercharacter delay
 def oscillating_animation(name,speed: int=0.1):
     # Set the animation speed (lower value = faster animation)
 
@@ -69,6 +81,7 @@ def oscillating_animation(name,speed: int=0.1):
 
             # Pause the animation for a specific duration
             time.sleep(speed)
+#My function to define the generation of a math question with either addition, subtraction, multiplication, modulus, integer division, or decimal division, with operands generated randomly as well.
 def MathQuestion():
 	global PointsDictionary, UserStats
 	Choice=0
@@ -89,6 +102,7 @@ def MathQuestion():
 	else:
 		Printing("Correct, {}\n".format(UserStats.Name))
 		PointsDictionary["Math Question"].correct()
+#My function to simulate a cirular list rotation. The list has between 5-10 elements. The user is prompted to guess what element is in a certain place. If they guess incorrectly, a simulation of the rotations is performed for each round. It is impressed when you get a question correct if you are below 10.
 def RotationOption():
 	global PointsDictionary, UserStats
 	nums=[]
@@ -128,8 +142,9 @@ def RotationOption():
 			Printing("It's alright, I would not expect you to know this stuff considering your age.\n")
 		else:
 			PointsDictionary["Rotation Question"].incorrect()
-
+#My function to generate a boolean expression with 1-2 conditions and make the user guess if it is true or false. It is impressed when you get a question correct if you are below 10.
 def LogicTest():
+	#My nested function to generate the boolean expressions
 	def BooleanExpressionGenerator()->str:
 		numofnums=random.randint(2,5)
 		Numbers=[]
@@ -170,6 +185,7 @@ def LogicTest():
 			Printing("It's alright, I would not expect you to know this stuff considering your age.")
 		else:
 			PointsDictionary["Logic Question"].incorrect()
+#My function to print the oscillating text with a delay provided by the user
 def SlowMoTextDisplay():
 	Printing("How many times would you like to print your string, {}?: ".format(UserStats.Name))
 	NumberofTimestoPrint=int(input())
@@ -182,6 +198,7 @@ def SlowMoTextDisplay():
 		afterdelay=float(input())
 		oscillating_animation(String,chardelay)
 		time.sleep(afterdelay)
+#My function to make a user guess a number from 0-100
 def GuessingGame():
 	global PointsDictionary, UserStats
 	Num=random.randint(0,100)
@@ -193,8 +210,9 @@ def GuessingGame():
 	else:
 		Printing("Incorrect, the number was {},{}\n".format(Num,UserStats.Name))
 		PointsDictionary["Guessing Game"].incorrect()
-def PersonalInformation()->bool:
-	global PointsDictionary, UserStats
+#My function to retrieve the user's personal information and save it in the user data sturcture. Is used throughout the other menu options. Self-removing.
+def PersonalInformation()->str:
+	global UserStats
 	Printing("What is your name: ")
 	Name=input()
 	Age=-1
@@ -207,6 +225,7 @@ def PersonalInformation()->bool:
 	FavColor=inquirer.prompt([inquirer.List("color",message="What is your favorite color?: ",choices=["Black", "Blue", "Cyan", "Green", "Magenta", "White", "Yellow"])])["color"]
 	UserStats=User(Name,Age,FavColor)
 	return "Tell me about yourself"
+#Defines a one player game played where user has to guess a number above another. It is an advanced guessing game
 def OnePlayerGame():
 	global PointsDictionary, UserStats
 	ComparisonOperators=["==",">","<",">=","<="]
@@ -227,7 +246,8 @@ def OnePlayerGame():
 	else:
 		Printing("You unfortunately failed, my number was {}".format(a,UserStats.Name), enddelay=2)
 		PointsDictionary["One Player Game"].incorrect()
-def Chatbot()->str:
+#Defines a chatbot to ask a series of predetermined questions evaluating the users engagement, enthusiasm, and commonality, and updating user's points accordingly. The program makes use of the time of day to determine the proper greeting. It makes use of the printing function to make the conversation more dramatic and organic. It also can be snarky when it gets responses that make no sense.
+def Chatbot():
 	Greetings=""
 	
 	currenthour=datetime.datetime.now().hour
@@ -456,9 +476,6 @@ def Chatbot()->str:
 		elif PointsDictionary["Chatbot"].Score==0:
 			Printing("😡"*94,delay=0.125)
 		else:
-			if PointsDictionary["Chatbot"].Score==0:
-				Printing("YYYYYYYYYYEEEEEEEEEEEESSSSSSSSSSSS!!!!!!!!!!!!!\n",0.125,0.25)
-				Printing("Just one more question before I can give my verdict and stop talking to you\n",0.125)
 			Printing("You have bad taste.")
 		PointsDictionary["Chatbot"].partcredit(Points,4)
 	
@@ -487,6 +504,9 @@ def Chatbot()->str:
 				Printing("Thats an intersting choice, for favorite number")
 				Points=1
 		PointsDictionary["Chatbot"].partcredit(Points,2)
+	FormerScore=PointsDictionary["Chatbot"].Score
+	FormerPoints=PointsDictionary["Chatbot"].Points
+	PointsDictionary["Chatbot"]=Grade()
 	FeelingRes()
 	Sibs()
 	Pets()
@@ -499,6 +519,11 @@ def Chatbot()->str:
 	Sports()
 	FavCountry()
 	FavNumber()
+	if PointsDictionary["Chatbot"].Score==0:
+		Dots(18)
+		Printing("It seems that the chatbot \"explode from rage\" feature that I installed and tried to turn off, did not turn off properly. I do not think that we will be able to get it working for the rest of the session")
+		PointsDictionary["Chatbot"].partcredit(FormerScore,FormerPoints)
+		return "Talk to a chatbot"
 	if PointsDictionary["Chatbot"].Score<9:
 		Printing("Well, this was a nightmare, thank you for being my conversation partner. ",0.125,2)
 		Printing("Now get out of here.",0.5,2)
@@ -508,8 +533,7 @@ def Chatbot()->str:
 		Printing("This was an enjoyable chat. I hope to talk to you again")
 	else:
 		Printing("You might be potential best friend material.")
-	return "Talk to a chatbot"
-
+#Ends the program and tallies the user results. Also resets the terminal colors before exiting the program.
 def Quit():
 	global PointsDictionary, UserStats
 	Printing("You got a {}/{} on answering math questions\n".format(PointsDictionary["Math Question"].Score,PointsDictionary["Math Question"].Points))
@@ -532,7 +556,9 @@ def Quit():
 	print(colorama.Fore.RESET)
 	print(colorama.Back.RESET)
 	exit(0)
+#The main function
 def Menu():
+	#Creates a menu structure from the user can select option by using the prompt from the inquirer. The user does not type anything, instead they select the menu option
 	OptionsDict={
 		"Answer a math question for a point":MathQuestion,
 		"Answer a rotation question for a point":RotationOption,
@@ -544,20 +570,26 @@ def Menu():
 		"Talk to a chatbot":Chatbot,
 		"Quit":Quit
 	}
+	#Print intro text
 	Printing("Welcome to the J Menu\n",enddelay=2)
+	#Creates a permanent loop for the menu, and relies on the quit option to break the cycle.
 	while True:
+		#Get the user's response when they select an option and also colors the message in the user's favorite color.
 		answer: str=str(inquirer.prompt([inquirer.List("Option",message="{}What would would you like to do?".format(UserStats.FavoriteColor),choices=OptionsDict.keys())])["Option"])
+		#Calls the menu option, then gets the return result (the key of the option for self removing functions), before checking if it is a self removing function
 		returnres=OptionsDict[answer]()
+		#Checks if the return result is something to be deleted (if function does not return None as the functions without a return result do because they are not self-removing)
 		if returnres:
 			if returnres=="Tell me about yourself":
 				OptionsDict.pop(returnres)
+			#Stores the former keys
 				OptionsDictKeys=[]
 				for i in OptionsDict.keys():
 					OptionsDictKeys.append(i)
+			#Renames the keys with the favorite color
 				for i in OptionsDictKeys:
 					OptionsDict[UserStats.FavoriteColor+i]=OptionsDict.pop(i)
-			else:
-				OptionsDict.pop(UserStats.FavoriteColor+returnres)
+#Calls the menu function
 Menu()
 
 
