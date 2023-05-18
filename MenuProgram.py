@@ -343,7 +343,7 @@ def Chatbot():
 			if PointsDictionary["Chatbot"].Score==0:
 				Dots()
 				for i in range(3):
-					Printing(PetsRes[0],delay=0.5)
+					Printing(PetsRes[0],delay=0.125)
 				Printing(PetsRes[1])
 			else:
 				Printing(PetsRes[2].format(NumofAnimals))
