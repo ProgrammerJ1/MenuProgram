@@ -212,15 +212,35 @@ def GuessingGame():
 		PointsDictionary["Guessing Game"].incorrect()
 #My function to retrieve the user's personal information and save it in the user data sturcture. Is used throughout the other menu options. Self-removing.
 def PersonalInformation()->str:
+	def GetAge()->int:
+		Age: int
+		try:
+			Printing("{}: ".format("How old are you?"))
+			NumofYears=input()
+			x=int(NumofYears)
+		except ValueError:
+			Printing("You physically cannot be {} age".format(NumofYears))
+			return GetAge()
+		else:
+			UserStats.Age,Age=x
+			if Age<0:
+				Printing("You cannot be a negative age but whatever")
+				return GetAge()
+			elif Age<=0 and Age>=3:
+				Printing("I cannot believe a baby knows how to use technology, you are a liar")
+			elif Age<=4 and Age>=12:
+				Printing("Your still a child, like I once was")
+			elif Age==13 or (Age<=15 and Age>=17):
+				Printing("Your a teenager like me")
+			elif Age==14:
+				Printing("Your my age")
+			else:
+				Printing("Your an adult, that's nice, you get freedom.")
+		return Age
 	global UserStats
 	Printing("What is your name: ")
 	Name=input()
-	Age=-1
-	if UserStats.Age==-1:
-		Printing("What is your age: ")
-		Age=int(input())
-	else:
-		Age=UserStats.Age
+	Age=GetAge()
 	Printing("What is your favorite color: ")
 	FavColor=inquirer.prompt([inquirer.List("color",message="What is your favorite color?: ",choices=["Black", "Blue", "Cyan", "Green", "Magenta", "White", "Yellow"])])["color"]
 	UserStats=User(Name,Age,FavColor)
@@ -386,37 +406,6 @@ def Chatbot():
 			else:
 				Printing("That's not even a color, my dopey conversation partner")
 		PointsDictionary["Chatbot"].partcredit(Points,2)
-	def Age():
-		global PointsDictionary
-		Points=0
-		Age: int
-		try:
-			Printing("{}: ".format(Questions[4]))
-			NumofYears=input()
-			x=int(NumofYears)
-		except ValueError:
-			if PointsDictionary["Chatbot"].Score==0:
-				Dots(6)
-			else:
-				Printing("You physically cannot be {} age".format(NumofYears))
-		else:
-			UserStats.Age,Age=x
-			if Age<0:
-				Printing("You cannot be a negative age but whatever")
-			elif Age<=0 and Age>=3:
-				Printing("I cannot believe a baby knows how to use technology, you are a liar")
-			elif Age<=4 and Age>=12:
-				Printing("Your still a child, like I once was")
-				Points=1
-			elif Age==13 or (Age<=15 and Age>=17):
-				Printing("Your a teenager like me")
-				Points=2
-			elif Age==14:
-				Printing("Your my age")
-				Points=3
-			else:
-				Printing("Your an adult, that's nice, you get freedom.")
-			PointsDictionary["Chatbot"].partcredit(Points,3)
 	def FavAnimalFunc():
 		global PointsDictionary
 		Points=0
@@ -511,10 +500,6 @@ def Chatbot():
 	Sibs()
 	Pets()
 	HairColorFunc()
-	if UserStats.Age==-1:
-		Age()
-	else:
-		PointsDictionary["Chatbot"].correct(3)
 	FavAnimalFunc()
 	Sports()
 	FavCountry()
@@ -525,12 +510,12 @@ def Chatbot():
 		Printing("I do not think that we will be able to get it working for the rest of the session.",enddelay=2)
 		PointsDictionary["Chatbot"].partcredit(FormerScore,FormerPoints)
 		return "Talk to a chatbot"
-	if PointsDictionary["Chatbot"].Score<9:
+	if PointsDictionary["Chatbot"].Score<8:
 		Printing("Well, this was a nightmare, thank you for being my conversation partner. ",0.125,2)
 		Printing("Now get out of here.",0.5,2)
-	elif PointsDictionary["Chatbot"].Score<18:
+	elif PointsDictionary["Chatbot"].Score<15:
 		Printing("This was a pleasant conversation")
-	elif PointsDictionary["Chatbot"].Score<21:
+	elif PointsDictionary["Chatbot"].Score<18:
 		Printing("This was an enjoyable chat. I hope to talk to you again")
 	else:
 		Printing("You might be potential best friend material.")
