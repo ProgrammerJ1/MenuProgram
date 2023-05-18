@@ -533,6 +533,7 @@ def Chatbot():
 		Printing("This was an enjoyable chat. I hope to talk to you again")
 	else:
 		Printing("You might be potential best friend material.")
+	PointsDictionary["Chatbot"].partcredit(FormerScore,FormerPoints)
 #Ends the program and tallies the user results. Also resets the terminal colors before exiting the program.
 def Quit():
 	global PointsDictionary, UserStats
