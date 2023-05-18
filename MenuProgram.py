@@ -530,6 +530,7 @@ def Quit():
 	Printing("Anyway, thank you for your time.")
 	Printing("Goodbye, {}\n".format(UserStats.Name))
 	print(colorama.Fore.RESET)
+	print(colorama.Back.RESET)
 	exit(0)
 def Menu():
 	OptionsDict={
