@@ -17,7 +17,7 @@ class Grade:
 	def incorrect(self,got: int=1,worth: int=1):
 		self.Points+=worth
 PointsDictionary={"Math Question":Grade(),"Rotation Question":Grade(),"Logic Question":Grade(),"Guessing Game":Grade(),"One Player Game":Grade(),"Chatbot":Grade()}
-ColorsDict={"Black":colorama.Fore.BLACK,"Blue":colorama.Fore.BLUE,"Cyan":colorama.Fore.CYAN,"Green":colorama.Fore.GREEN,"Magenta":colorama.Fore.MAGENTA,"White":colorama.Fore.WHITE,"Yellow":colorama.Fore.YELLOW,"":""}
+ColorsDict={"Black":colorama.Fore.BLACK+colorama.Back.WHITE,"Blue":colorama.Fore.BLUE,"Cyan":colorama.Fore.CYAN,"Green":colorama.Fore.GREEN,"Magenta":colorama.Fore.MAGENTA,"White":colorama.Fore.WHITE+colorama.Back.BLACK,"Yellow":colorama.Fore.YELLOW,"":""}
 class User:
 	def __init__(self,a:str="User",b:int=-1,c:str=""):
 		print(ColorsDict[c])
