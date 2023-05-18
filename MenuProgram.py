@@ -512,9 +512,9 @@ def Chatbot()->str:
 
 def Quit():
 	global PointsDictionary, UserStats
-	Printing("You got a {}/{} on anwsering math questions\n".format(PointsDictionary["Math Question"].Score,PointsDictionary["Math Question"].Points))
-	Printing("You got a {}/{} on anwsering rotations questions\n".format(PointsDictionary["Rotation Question"].Score,PointsDictionary["Rotation Question"].Points))
-	Printing("You got a {}/{} on anwsering logic questions\n".format(PointsDictionary["Logic Question"].Score,PointsDictionary["Logic Question"].Points))
+	Printing("You got a {}/{} on answering math questions\n".format(PointsDictionary["Math Question"].Score,PointsDictionary["Math Question"].Points))
+	Printing("You got a {}/{} on answering rotations questions\n".format(PointsDictionary["Rotation Question"].Score,PointsDictionary["Rotation Question"].Points))
+	Printing("You got a {}/{} on answering logic questions\n".format(PointsDictionary["Logic Question"].Score,PointsDictionary["Logic Question"].Points))
 	Printing("You got a {}/{} on guessing numbers\n".format(PointsDictionary["Guessing Game"].Score,PointsDictionary["Guessing Game"].Points))
 	Printing("You got a {}/{} on advanced guessing\n".format(PointsDictionary["One Player Game"].Score,PointsDictionary["One Player Game"].Points))
 	Printing("You got a {}/{} on talking to the chatbot\n".format(PointsDictionary["Chatbot"].Score,PointsDictionary["Chatbot"].Points))
