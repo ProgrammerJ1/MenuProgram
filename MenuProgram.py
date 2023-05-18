@@ -521,7 +521,8 @@ def Chatbot():
 	FavNumber()
 	if PointsDictionary["Chatbot"].Score==0:
 		Dots(18)
-		Printing("It seems that the chatbot \"explode from rage\" feature that I installed and tried to turn off, did not turn off properly. I do not think that we will be able to get it working for the rest of the session")
+		Printing("It seems that the chatbot \"explode from rage\" feature that I installed and tried to turn off, did not turn off properly. ",enddelay=3)
+		Printing("I do not think that we will be able to get it working for the rest of the session.",enddelay=2)
 		PointsDictionary["Chatbot"].partcredit(FormerScore,FormerPoints)
 		return "Talk to a chatbot"
 	if PointsDictionary["Chatbot"].Score<9:
