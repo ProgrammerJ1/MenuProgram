@@ -307,17 +307,22 @@ def OnePlayerGame():
 	b=random.randint(0,100)
 	Printing("I have a number from 0-100 in my head, your number has to be {} mine, and it has to be in my range\n".format([" equal to "," greater than "," less than "," greater than or equal to "," less than or equal to "][ComparisonIndex]),enddelay=2)
 	Printing("Enter your number: ")
-	a=int(input())
-	if 0>a or a>100:
-		Printing("You do not get to use an invalid number you cheater!!! ",enddelay=2)
-		Printing("Cheater {}".format(UserStats.Name))
-		PointsDictionary["One Player Game"].incorrect(2)
-	elif (eval("a{}b".format(ComparisonOperator))):
-		Printing("You succeeded, my number was {}, {}".format(a,UserStats.Name), enddelay=2)
-		PointsDictionary["One Player Game"].correct()
-	else:
-		Printing("You unfortunately failed, my number was {}".format(a,UserStats.Name), enddelay=2)
-		PointsDictionary["One Player Game"].incorrect()
+	while True:
+		try:
+			a=int(input())
+			if 0>a or a>100:
+				Printing("You do not get to use an invalid number you cheater!!! ",enddelay=2)
+				Printing("Cheater {}".format(UserStats.Name))
+				PointsDictionary["One Player Game"].incorrect(2)
+			elif (eval("a{}b".format(ComparisonOperator))):
+				Printing("You succeeded, my number was {}, {}".format(a,UserStats.Name), enddelay=2)
+				PointsDictionary["One Player Game"].correct()
+			else:
+				Printing("You unfortunately failed, my number was {}".format(a,UserStats.Name), enddelay=2)
+				PointsDictionary["One Player Game"].incorrect()
+			return None
+		except ValueError:
+			Printing("You did not enter a number\n")
 #Defines a chatbot to ask a series of predetermined questions evaluating the users engagement, enthusiasm, and commonality, and updating user's points accordingly. The program makes use of the time of day to determine the proper greeting. It makes use of the printing function to make the conversation more dramatic and organic. It also can be snarky when it gets responses that make no sense.
 def Chatbot():
 	Greetings=""
