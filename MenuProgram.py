@@ -97,9 +97,9 @@ def MathQuestion():
 			c=float(input())
 		except ValueError:
 			Printing("."*4,0.5)
-			print("\n",flush=True)
+			print("\n",end="",flush=True)
 			Printing("You did not give a number")
-			print("\n",flush=True)
+			print("\n",end="",flush=True)
 		else:
 			if c!=eval(Operations[Choice].format(a,b)):
 				Printing("Unfortunately, that answer is not correct.\n",enddelay=2)
@@ -133,24 +133,39 @@ def RotationOption():
 			nums=nums[1:] + nums[:1]
 			RotResults.append("Rotation {}: {}, Element {} is {}\n".format(i+1,nums,Index+1,nums[Index]))
 	Printing("I just finished rotating the list.\n",enddelay=2)
-	Printing("Now, what is element {} (element 1 is the first element, as we are not using zero indexing) of the new list: ".format(Index+1))
-	x=int(input())
-	if x==nums[Index]:
-		Printing("You are correct, {}".format(UserStats.Name),enddelay=2)
-		if UserStats.Age < 10 and UserStats.Age!=-1:
-			PointsDictionary["Rotation Question"].partcredit(2,1)
-			Printing("I am impressed you got that correct considering your age.\n")
+	DoneBefore=False
+	while True:
+		Printing("{}hat is element {} (element 1 is the first element, as we are not using zero indexing) of the new list: ".format(["Now, w","W"][int(DoneBefore)],Index+1))
+		try:
+			x=int(input())
+			if not (x in nums):
+				raise Exception
+		except ValueError:
+			Printing("You did not enter a number",enddelay=2)
+			print("\n",end="",flush=True)
+			DoneBefore=True
+		except:
+			Printing("You did not enter a number in the list",enddelay=2)
+			print("\n",end="",flush=True)
+			DoneBefore=True
 		else:
-			PointsDictionary["Rotation Question"].correct()
-	else:
-		Printing("That is incorrect, {}\n".format(UserStats.Name),enddelay=2)
-		Printing("I will show you the rotations\n")
-		for i in RotResults:
-			Printing(i,enddelay=2)
-		if UserStats.Age < 10 and UserStats.Age!=-1:
-			Printing("It's alright, I would not expect you to know this stuff considering your age.\n")
-		else:
-			PointsDictionary["Rotation Question"].incorrect()
+			if x==nums[Index]:
+				Printing("You are correct, {}".format(UserStats.Name),enddelay=2)
+				if UserStats.Age < 10 and UserStats.Age!=-1:
+					PointsDictionary["Rotation Question"].partcredit(2,1)
+					Printing("I am impressed you got that correct considering your age.\n")
+				else:
+					PointsDictionary["Rotation Question"].correct()
+			else:
+				Printing("That is incorrect, {}\n".format(UserStats.Name),enddelay=2)
+				Printing("I will show you the rotations\n")
+				for i in RotResults:
+					Printing(i,enddelay=2)
+				if UserStats.Age < 10 and UserStats.Age!=-1:
+					Printing("It's alright, I would not expect you to know this stuff considering your age.\n")
+				else:
+					PointsDictionary["Rotation Question"].incorrect()
+			return None
 #My function to generate a boolean expression with 1-2 conditions and make the user guess if it is true or false. It is impressed when you get a question correct if you are below 10.
 def LogicTest():
 	#My nested function to generate the boolean expressions
