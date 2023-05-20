@@ -216,22 +216,22 @@ def SlowMoTextDisplay():
 	Printing("Enter your string: ")
 	String=input()
 	for i in range(NumberofTimestoPrint):
-		Printing("Enter in seconds how long you want to wait before printing another character: ")
 		chardelay=0.0
 		CharDelayBeingSet=True
 		while CharDelayBeingSet:
 			try:
+				Printing("Enter in seconds how long you want to wait before printing another character: ")
 				chardelay=float(input())
 			except ValueError:
 				Printing("You did not enter a decimal value")
 				print("\n")
 			else:
 				CharDelayBeingSet=False
-		Printing("Enter in seconds how long you want to wait at the end: ")
 		afterdelay=0.0
 		AfterDelayBeingisBeingSet=True
 		while AfterDelayBeingisBeingSet:
 			try:
+				Printing("Enter in seconds how long you want to wait at the end: ")
 				afterdelay=float(input())
 			except ValueError:
 				Printing("You did not enter a decimal value")
