@@ -88,20 +88,29 @@ def MathQuestion():
 	Operations=["{}+{}","{}-{}","{}*{}","{}//{}","{}%{}","{}/{}"]
 	a=random.randint(1,10)
 	b=random.randint(1,10)
-	if (Choice==3):
-		print("The quotient of {} divided by {}=")
-	else:
-		Printing(Operations[Choice].format(a,b)+"=")
-	c=float(input())
-	if c!=eval(Operations[Choice].format(a,b)):
-		Printing("Unfortunately, that answer is not correct.\n",enddelay=2)
-		Printing("The correct answer is {}, {}\n".format(eval(Operations[Choice].format(a,b)),UserStats.Name))
-		if UserStats.Age>20:
-			Printing("You should be able to do that, you're {}\n".format(UserStats.Age))
-		PointsDictionary["Math Question"].incorrect()
-	else:
-		Printing("Correct, {}\n".format(UserStats.Name))
-		PointsDictionary["Math Question"].correct()
+	while True:
+		if (Choice==3):
+			print("The quotient of {} divided by {}=")
+		else:
+			Printing(Operations[Choice].format(a,b)+"=")
+		try:
+			c=float(input())
+		except ValueError:
+			Printing("."*4,0.5)
+			print("\n",flush=True)
+			Printing("You did not give a number")
+			print("\n",flush=True)
+		else:
+			if c!=eval(Operations[Choice].format(a,b)):
+				Printing("Unfortunately, that answer is not correct.\n",enddelay=2)
+				Printing("The correct answer is {}, {}\n".format(eval(Operations[Choice].format(a,b)),UserStats.Name))
+				if UserStats.Age>20:
+					Printing("You should be able to do that, you're {}\n".format(UserStats.Age))
+				PointsDictionary["Math Question"].incorrect()
+			else:
+				Printing("Correct, {}\n".format(UserStats.Name))
+				PointsDictionary["Math Question"].correct()
+			return None
 #My function to simulate a cirular list rotation. The list has between 5-10 elements. The user is prompted to guess what element is in a certain place. If they guess incorrectly, a simulation of the rotations is performed for each round. It is impressed when you get a question correct if you are below 10.
 def RotationOption():
 	global PointsDictionary, UserStats
