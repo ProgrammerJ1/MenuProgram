@@ -1,3 +1,4 @@
+#Author: Joshua Ward-Scott, known on github as ProgrammerJ1
 import time
 import types
 import random
