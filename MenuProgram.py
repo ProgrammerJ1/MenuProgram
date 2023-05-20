@@ -246,13 +246,22 @@ def GuessingGame():
 	global PointsDictionary, UserStats
 	Num=random.randint(0,100)
 	Printing("I have a number in my head from 0-100 in my head, what is it?: ".format(Num))
-	GuessedNum=int(input())
-	if GuessedNum==Num:
-		Printing("Correct, you get a point, {}\n".format(UserStats.Name))
-		PointsDictionary["Guessing Game"].correct()
-	else:
-		Printing("Incorrect, the number was {},{}\n".format(Num,UserStats.Name))
-		PointsDictionary["Guessing Game"].incorrect()
+	GuessedNum=0
+	while True:
+		try:
+			GuessedNum=int(input())
+			if GuessedNum>100 or GuessedNum<0:
+				raise Exception
+		except ValueError:
+			Printing("You did not enter an integer\n")
+		else:
+			if GuessedNum==Num:
+				Printing("Correct, you get a point, {}\n".format(UserStats.Name))
+				PointsDictionary["Guessing Game"].correct()
+			else:
+				Printing("Incorrect, the number was {},{}\n".format(Num,UserStats.Name))
+				PointsDictionary["Guessing Game"].incorrect()
+			return None
 #My function to retrieve the user's personal information and save it in the user data sturcture. Is used throughout the other menu options. Self-removing.
 def PersonalInformation()->str:
 	def GetAge()->int:
