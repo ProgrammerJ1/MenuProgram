@@ -615,7 +615,7 @@ def Menu():
 		"Quit":Quit
 	}
 	#Print intro text
-	Printing("Welcome to the J Menu\n",enddelay=2)
+	Printing("Welcome to the J Menu\nIn the menu you can scroll by press the up and down arrow keys",enddelay=2)
 	#Creates a permanent loop for the menu, and relies on the quit option to break the cycle.
 	while True:
 		#Get the user's response when they select an option and also colors the message in the user's favorite color.
