@@ -297,7 +297,7 @@ def PersonalInformation()->str:
 	FavColor=inquirer.prompt([inquirer.List("color",message="What is your favorite color?: ",choices=["Black", "Blue", "Cyan", "Green", "Magenta", "White", "Yellow"])])["color"]
 	UserStats=User(Name,Age,FavColor)
 	return "Tell me about yourself"
-#Defines a one player game played where user has to guess a number above another. It is an advanced guessing game
+#Defines a one player game played where user has to guess a number in the range of another. It is an advanced guessing game
 def OnePlayerGame():
 	global PointsDictionary, UserStats
 	ComparisonOperators=["==",">","<",">=","<="]
