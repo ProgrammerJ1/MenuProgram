@@ -88,20 +88,29 @@ def MathQuestion():
 	Operations=["{}+{}","{}-{}","{}*{}","{}//{}","{}%{}","{}/{}"]
 	a=random.randint(1,10)
 	b=random.randint(1,10)
-	if (Choice==3):
-		print("The quotient of {} divided by {}=")
-	else:
-		Printing(Operations[Choice].format(a,b)+"=")
-	c=float(input())
-	if c!=eval(Operations[Choice].format(a,b)):
-		Printing("Unfortunately, that answer is not correct.\n",enddelay=2)
-		Printing("The correct answer is {}, {}\n".format(eval(Operations[Choice].format(a,b)),UserStats.Name))
-		if UserStats.Age>20:
-			Printing("You should be able to do that, you're {}\n".format(UserStats.Age))
-		PointsDictionary["Math Question"].incorrect()
-	else:
-		Printing("Correct, {}\n".format(UserStats.Name))
-		PointsDictionary["Math Question"].correct()
+	while True:
+		if (Choice==3):
+			print("The quotient of {} divided by {}=")
+		else:
+			Printing(Operations[Choice].format(a,b)+"=")
+		try:
+			c=float(input())
+		except ValueError:
+			Printing("."*4,0.5)
+			print("\n",flush=True)
+			Printing("You did not give a number")
+			print("\n",flush=True)
+		else:
+			if c!=eval(Operations[Choice].format(a,b)):
+				Printing("Unfortunately, that answer is not correct.\n",enddelay=2)
+				Printing("The correct answer is {}, {}\n".format(eval(Operations[Choice].format(a,b)),UserStats.Name))
+				if UserStats.Age>20:
+					Printing("You should be able to do that, you're {}\n".format(UserStats.Age))
+				PointsDictionary["Math Question"].incorrect()
+			else:
+				Printing("Correct, {}\n".format(UserStats.Name))
+				PointsDictionary["Math Question"].correct()
+			return None
 #My function to simulate a cirular list rotation. The list has between 5-10 elements. The user is prompted to guess what element is in a certain place. If they guess incorrectly, a simulation of the rotations is performed for each round. It is impressed when you get a question correct if you are below 10.
 def RotationOption():
 	global PointsDictionary, UserStats
@@ -222,20 +231,20 @@ def PersonalInformation()->str:
 			Printing("You physically cannot be {} age".format(NumofYears))
 			return GetAge()
 		else:
-			UserStats.Age,Age=x
+			Age=x
 			if Age<0:
 				Printing("You cannot be a negative age but whatever")
 				return GetAge()
 			elif Age<=0 and Age>=3:
 				Printing("I cannot believe a baby knows how to use technology, you are a liar")
 			elif Age<=4 and Age>=12:
-				Printing("Your still a child, like I once was")
+				Printing("You're still a child, like I once was")
 			elif Age==13 or (Age<=15 and Age>=17):
-				Printing("Your a teenager like me")
+				Printing("You're a teenager like me")
 			elif Age==14:
-				Printing("Your my age")
+				Printing("You're my age")
 			else:
-				Printing("Your an adult, that's nice, you get freedom.")
+				Printing("You're an adult, that's nice, you get freedom.")
 		return Age
 	global UserStats
 	Printing("What is your name: ")
@@ -279,7 +288,7 @@ def Chatbot():
 	else:
 		Greetings="Good evening"
 	
-	Questions=["How are you feeling today?","How many siblings do you have?","How many pets do you have?","What color is your hair?","How old are you?","What is your favorite animal?","What is your favorite sport to watch?","What country would you like to visit next?","What is your favorite color?","What is your favorite number?"]
+	Questions=["How are you feeling today?","How many siblings do you have?","How many pets do you have?","What color is your hair?","What is your favorite animal?","What is your favorite sport to watch?","What country would you like to visit next?","What is your favorite number?"]
 	
 	def Dots(x=3):
 		Printing("."*x,delay=0.5)
@@ -410,7 +419,7 @@ def Chatbot():
 		global PointsDictionary
 		Points=0
 		FavAnimals=["lions", "leopards", "elephants", "rhinos", "buffalos","lion", "leopard", "elephant", "rhino", "buffalo"]
-		Printing("{}: ".format(Questions[5]))
+		Printing("{}: ".format(Questions[4]))
 		FavoriteAnimal=input()
 		if FavoriteAnimal in FavAnimals:
 			Printing("Wow, good choice")
@@ -427,7 +436,7 @@ def Chatbot():
 		Points=0
 		FavoriteSport1=["baseball","volleyball","soccer","lacrosse"]
 		FavoriteSport2=["football","rugby","golf"]
-		Printing("{}: ".format(Questions[6]))
+		Printing("{}: ".format(Questions[5]))
 		FavoriteSport=input()
 		if FavoriteSport in FavoriteSport1:
 			Points=2
@@ -448,7 +457,7 @@ def Chatbot():
 		Points=0
 		Countries2=["Italy","France","Spain"]
 		Countries3=["Thailand","Germany","India"]
-		Printing("{}: ".format(Questions[7]))
+		Printing("{}: ".format(Questions[6]))
 		Country=input()
 		if Country=="United States":
 			Points=4
@@ -473,15 +482,15 @@ def Chatbot():
 		Points=0
 		FavNumb: float
 		try:
-			Printing("{}: ".format(Questions[9]))
+			Printing("{}: ".format(Questions[7]))
 			FavNum=input()
 			x=float(FavNum)
 		except ValueError:
 			if PointsDictionary["Chatbot"].Score==0:
 				Dots(25)
-				Printing("Finally, ",end="",flush=True)
+				Printing("Finally, ",0.5)
 				
-				Printing("It's over",flush=True)
+				Printing("It's over",1)
 			else:
 				Printing("That is no number")
 		else:
@@ -537,7 +546,7 @@ def Quit():
 		Printing("Hey, wait a minute. Why did you call me up to do nothing with me.",0.03125,5)
 		Printing("Whatever")
 	elif GlobalGrade.Score/GlobalGrade.Points>=0.8 and UserStats.Age<10:
-		Printing("That is impressiving for your age",enddelay=5)
+		Printing("That is impressive for your age",enddelay=5)
 	Printing("Anyway, thank you for your time.")
 	Printing("Goodbye, {}\n".format(UserStats.Name))
 	print(colorama.Fore.RESET)
