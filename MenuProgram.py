@@ -240,6 +240,7 @@ def SlowMoTextDisplay():
 				AfterDelayBeingisBeingSet=False
 		oscillating_animation(String,chardelay)
 		time.sleep(afterdelay)
+		print("\n")
 #My function to make a user guess a number from 0-100
 def GuessingGame():
 	global PointsDictionary, UserStats
