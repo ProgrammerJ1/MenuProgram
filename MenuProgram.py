@@ -217,9 +217,27 @@ def SlowMoTextDisplay():
 	String=input()
 	for i in range(NumberofTimestoPrint):
 		Printing("Enter in seconds how long you want to wait before printing another character: ")
-		chardelay=float(input())
+		chardelay=0.0
+		CharDelayBeingSet=True
+		while CharDelayBeingSet:
+			try:
+				chardelay=float(input())
+			except ValueError:
+				Printing("You did not enter a decimal value")
+				print("\n")
+			else:
+				CharDelayBeingSet=False
 		Printing("Enter in seconds how long you want to wait at the end: ")
-		afterdelay=float(input())
+		afterdelay=0.0
+		AfterDelayBeingisBeingSet=True
+		while AfterDelayBeingisBeingSet:
+			try:
+				afterdelay=float(input())
+			except ValueError:
+				Printing("You did not enter a decimal value")
+				print("\n")
+			else:
+				AfterDelayBeingisBeingSet=False
 		oscillating_animation(String,chardelay)
 		time.sleep(afterdelay)
 #My function to make a user guess a number from 0-100
